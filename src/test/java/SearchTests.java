@@ -59,4 +59,11 @@ public class SearchTests {
 
 
     }
-    }
+@Test
+void myThirdTest() {
+    String aaa;
+    int nnn;
+
+
+}
+}
