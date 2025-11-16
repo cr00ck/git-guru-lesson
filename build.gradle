@@ -32,3 +32,9 @@ dependencies {
     testImplementation 'org.slf4j:slf4j-simple:2.0.16'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
 }
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+        // или 17 если хотите использовать Java 17
+    }
+}
