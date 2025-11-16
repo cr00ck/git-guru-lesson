@@ -59,8 +59,4 @@ public class SearchTests {
 
 
     }
-    @Test
-    void second_test (){
-    int one;
-    }
-    }
+  
