@@ -26,8 +26,8 @@ public class SearchTests {
     }
 
     @Test
-    //на тестах с гугл всегда появлялась капча и тест падал, дипсик предложил создать файл в проекте
-    //с html страницей и на ней запустить, все сработало.
+        //на тестах с гугл всегда появлялась капча и тест падал, дипсик предложил создать файл в проекте
+        //с html страницей и на ней запустить, все сработало.
     void successfulSearchTest() {
         // Открываем локальный HTML файл
         open("file://" + System.getProperty("user.dir") + "/src/test/resources/test-page.html");
@@ -45,6 +45,7 @@ public class SearchTests {
 
         System.out.println("Тест успешно выполнен!");
     }
+
     @Test
     void testDuckDuckGo() {
         open("https://duckduckgo.com/");
@@ -56,11 +57,11 @@ public class SearchTests {
         // И что есть текст "Selenide"
         $("body").shouldHave(Condition.text("Selenide"));
         System.out.println("Тест успешно выполнен!");
-
-
     }
+
     @Test
-    void second_test (){
-    int one;
+    void myFirstTest() {
+        String hhh;
     }
-    }
+}
+
