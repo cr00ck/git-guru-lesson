@@ -64,3 +64,8 @@ public class SearchTests {
         String hhh;
     }
 }
+    @Test
+    void second_test (){
+    int one;
+    }
+    }
