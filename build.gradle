@@ -17,19 +17,16 @@ tasks.withType(JavaCompile) {
 }
 
 test {
-    useJUnitPlatform()
+    useJUnitPlatf orm()
 }
-dependencies {
-        // Вариант 1: Простая реализация (рекомендуется)
-    testImplementation 'org.slf4j:slf4j-simple:2.0.16'
+
 
     // Ваши остальные зависимости
-    testImplementation 'com.codeborne:selenide:7.3.2'
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
-}
+
+
 dependencies {
     testImplementation 'com.codeborne:selenide:7.2.3' // Более стабильная версия
-    testImplementation 'org.slf4j:slf4j-simple:2.0.16'
+    testImplementation 'org.slf4j:slf4j-simple:2.0.16'// для вывода логов
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
 }
 java {

@@ -59,5 +59,16 @@ public class SearchTests {
 
 
     }
+    // два сокращения , для айдишника ставим # $(#"locator") , для класса ставим . $(."locator")
+      //если в дом-дереве нужно найти вложенный элемент (класс в классе) , который ниже, можно записать через пробел так : $(#"locator #locator2")
+    //NAME можно записывать так: $("[name=email]").setValue; или $(byName("email")).setValue("1"); одинакого
+    //CLASS можно так: $(".inputtext.login_form_inform_box").setValue("1"); одинакого или $(".login_form_inform_box").setValue("1"); одинакого
+     //чтобы подняться по дереву вверх пишем .parent() - пример $("input"[type=submit]".parent()
+     //когда ищем по тексту и если ищем весь текст то : $(byText("Hello world")) а если только часть текста, то : $(withText("llo wor"))
+     //
+     //
+     //
+     //
+     //
 
 }
