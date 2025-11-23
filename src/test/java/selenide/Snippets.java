@@ -1,6 +1,6 @@
+package selenide;
+
 import com.codeborne.selenide.*;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
 
 import java.io.File;
@@ -238,6 +238,13 @@ public class Snippets {
         executeJavaScript("alert('selenide')");
         executeJavaScript("alert(arguments[0]+arguments[1])", "abc", 12);
         long fortytwo = executeJavaScript("return arguments[0]*arguments[1];", 6, 7);
+        -------------------------------------------------------------------------------------------------------------
+        //когда надо заморозить страницу, если поп-ап изчезает, когда убираем мышь
+        // либо в девтулз Sourses-> pause
+        //если это не сработало, то пишем в девтулз в Console-> setTimeout (function () {debugger}, 4000);
+
+        // если есть близнец-локатор, он может быть невидимый, тогда пишем в девтулз в Console-> $$(".Popover") и видим сколько таких локаторов
+        // и ИДЕ пишем $$(".Popover").findBy(visible); находим первый который видимый
 
     }
 }
