@@ -1,5 +1,13 @@
 plugins {
-    id 'java-library'
+    id 'java'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 }
 
 repositories {
@@ -7,15 +15,17 @@ repositories {
 }
 
 dependencies {
-    testImplementation (
-            "com.codeborne:selenide:6.19.1",
-            "org.junit.jupiter:junit-jupiter:5.9.3")
-}
-
-compileTestJava  {
-    options.encoding = 'UTF-8'
+    // Стабильная версия Selenide с хорошей поддержкой JDK 21
+    testImplementation 'com.codeborne:selenide:7.3.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
+    testImplementation 'org.slf4j:slf4j-simple:2.0.9'
 }
 
 test {
     useJUnitPlatform()
+    systemProperties = [
+            'selenide.browser': 'chrome',
+            'selenide.headless': 'false',
+            //'selenide.remote': 'http://localhost:4444/wd/hub' // если используете Selenium Grid
+    ]
 }

@@ -1,3 +1,5 @@
+package firstPractices;
+
 import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -35,17 +37,11 @@ public class DemoqaPracticeForm {
     void Demoga_practice() {
         // Открываем страницу
         open("https://demoqa.com/automation-practice-form");
-        executeJavaScript("$('footer').remove();");
-        executeJavaScript("$('#fixedban').remove();");
 
-        // Ждем загрузки страницы - проверяем видимость заголовка
-        $(".practice-form-wrapper").shouldBe(visible);
-
-        // Добавляем небольшую паузу для полной стабилизации
-        sleep(2000);
 
         // Заполняем поля с ожиданиями
         $("#firstName").shouldBe(visible).setValue("Kirill");
+
         $("#lastName").shouldBe(visible).setValue("Skotings");
         $("#userEmail").shouldBe(visible).setValue("ggg@mail.ru");
 

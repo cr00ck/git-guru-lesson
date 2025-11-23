@@ -1,4 +1,4 @@
-package guru.qa;
+package firstPractices;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
@@ -11,18 +11,18 @@ public class SearchTests {
     @BeforeAll
     static void setup() {
         Configuration.browser = "chrome";
-        Configuration.timeout = 10000;
-        Configuration.pageLoadTimeout = 30000; // Увеличиваем таймаут загрузки
+        //Configuration.timeout = 10000;
+        //Configuration.pageLoadTimeout = 30000; // Увеличиваем таймаут загрузки
         Configuration.browserSize = "1920x1080";
 
         // Настройки для стабильности
         Configuration.pageLoadStrategy = "eager";
         Configuration.holdBrowserOpen = false;
 
-        Configuration.browserCapabilities.setCapability("goog:chromeOptions", java.util.Map.of(
-                "excludeSwitches", java.util.List.of("enable-automation"),
-                "useAutomationExtension", false
-        ));
+//        Configuration.browserCapabilities.setCapability("goog:chromeOptions", java.util.Map.of(
+//                "excludeSwitches", java.util.List.of("enable-automation"),
+//                "useAutomationExtension", false
+       // ));
     }
 
     @Test
