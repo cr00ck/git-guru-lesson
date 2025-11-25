@@ -4,6 +4,7 @@ out/
 target/
 
 # Gradle
+.gradle/
 
 # IntelliJ IDEA
 .idea/

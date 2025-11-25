@@ -13,10 +13,7 @@ public class DemoqaPracticeForm {
     static void options() {
         Configuration.browserSize = "1920x1080";
         Configuration.browser = "chrome";
-        Configuration.timeout = 10000;
-        Configuration.pageLoadTimeout = 30000;
 
-        // Важные настройки для стабильности
         Configuration.holdBrowserOpen = false;
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
@@ -35,6 +32,7 @@ public class DemoqaPracticeForm {
 
     @Test
     void Demoga_practice() {
+
         // Открываем страницу
         open("https://demoqa.com/automation-practice-form");
 
