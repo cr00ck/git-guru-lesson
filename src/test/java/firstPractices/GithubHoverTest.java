@@ -29,6 +29,8 @@ public class GithubHoverTest {
 
     @Test
     void testWithHover() {
+        // ctrl+shift+L жмем после кажного готового теста, чтобы оптимизировать и удалить все лишнее
+
 
         //На главной странице GitHub выберите: Меню -> Solutions -> Enterprize (с помощью команды hover для Solutions).
         open("https://github.com");

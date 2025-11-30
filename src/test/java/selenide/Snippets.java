@@ -15,6 +15,8 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class Snippets {
 
+    // ctrl+shift+L жмем после кажного готового теста, чтобы оптимизировать и удалить все лишнее
+
 //    // this is not a full list, just the most common
 //
 //    void browser_command_examples() {
@@ -70,6 +72,8 @@ public class Snippets {
 //        $("div:last-child");//берем последнего div
 //
 //        $("div").$("h1").find(byText("abc")).click();
+//          $("#state").$(byText("Haryana")).click(); // good
+
 //        // very optional
 //        $(byAttribute("abc", "x")).click();
 //        $("[abc=x]").click();
@@ -163,6 +167,8 @@ public class Snippets {
 //        $("").shouldHave(value("25"));
 //        $("").shouldHave(exactValue("25"));
 //        $("").shouldBe(empty);
+    //        $(".modal-content").should(appear);
+
 //
 //        $("").shouldHave(attribute("disabled"));
 //        $("").shouldHave(attribute("name", "example"));
@@ -245,6 +251,9 @@ public class Snippets {
 //
 //        // если есть близнец-локатор, он может быть невидимый, тогда пишем в девтулз в Console-> $$(".Popover") и видим сколько таких локаторов
 //        // и ИДЕ пишем $$(".Popover").findBy(visible); находим первый который видимый
+
+          // когда мешает баннер или надо скрыть элемент со страницы
+          // в консоле    Selenide.executeJavaScript$("#Popover").remove;
 //
 //    }
 }

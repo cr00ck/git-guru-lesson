@@ -26,6 +26,8 @@ public class GithubDragAndDropTest {
     @Test
         //(опциональное) Запрограммируйте Drag&Drop с помощью Selenide.actions()
     void dragAndDropTest() {
+        // ctrl+shift+L жмем после кажного готового теста, чтобы оптимизировать и удалить все лишнее
+
 
 //- Откройте https://the-internet.herokuapp.com/drag_and_drop
         open("https://the-internet.herokuapp.com/drag_and_drop");

@@ -6,12 +6,14 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Selenide.$;
 
 public class DemoqaPracticeForm {
+    // ctrl+shift+L жмем после кажного готового теста, чтобы оптимизировать и удалить все лишнее
+
     @BeforeAll
     static void setUp() {
         Configuration.browserSize = "1920x1080";
@@ -38,22 +40,30 @@ public class DemoqaPracticeForm {
         $("#dateOfBirthInput").click();
         $(".react-datepicker__month-select").selectOption("July");
         $(".react-datepicker__year-select").selectOption("1987");
-        $(".react-datepicker__day--017:not(.react-datepicker__day--outside-month)").click();
+        $(".react-datepicker__day--017:not(.react-datepicker__day--outside-month)").click();// не содержит класс .react-datepicker__day--outside-month
        $("#subjectsInput").setValue("Biology").pressEnter();
 
         $("label[for='hobbies-checkbox-1']").click();
+//        $(byText("Male")); //хороший вариант но если будут другие локали то другой язык
         $("label[for='hobbies-checkbox-2']").click();
 
         $("input[type='file']").uploadFile(new File("src/test/resources/Medal Star (1).png"));
+//        $("input[type='file']").uploadFromClasspath ("/Medal Star (1).png"); // по дефолту знает что в ресурсах лежит , только для type=file
         $("#currentAddress").setValue("Current Address");
 
-        $("#react-select-3-input").setValue("Haryana").pressEnter();
+        $("#state").$(byText("Haryana")).click(); // good
+//        $("#react-select-3-input").setValue("Haryana").pressEnter(); // so-so
         $("#state").shouldHave(text("Haryana"));
 
-        $("#react-select-4-input").setValue("Panipat").pressEnter();;
+        $("#city").$(byText("Panipat")).click(); // good
+//        $("#react-select-4-input").setValue("Panipat").pressEnter();; //so-so
         $("#city").shouldHave(text("Panipat"));
 
         $("#submit").click();
+        // Ждем появления модального окна
+        $(".modal-content").shouldBe(visible);
+//        $(".modal-content").should(appear);
+
         $("#example-modal-sizes-title-lg").shouldHave(text("Thanks for submitting the form"));
         $(".modal-body .table-responsive").shouldHave(text("Kirill Skotings"));
         $(".modal-body .table-responsive").shouldHave(text("ggg@mail.ru"));
@@ -66,11 +76,5 @@ public class DemoqaPracticeForm {
         $(".modal-body .table-responsive").shouldHave(text("Medal Star (1).png"));
         $(".modal-body .table-responsive").shouldHave(text("Current Address"));
         $(".modal-body .table-responsive").shouldHave(text("Haryana Panipat"));
-
-
-
-
-
-
 
     }}
