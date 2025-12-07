@@ -37,6 +37,8 @@ public class DemoqaPracticeForm {
         $("#userEmail").shouldBe(visible).setValue("ggg@mail.ru");
         $("label[for='gender-radio-1']").click();
         $("#userNumber").setValue("8916246109");
+
+
         $("#dateOfBirthInput").click();
         $(".react-datepicker__month-select").selectOption("July");
         $(".react-datepicker__year-select").selectOption("1987");
@@ -51,18 +53,18 @@ public class DemoqaPracticeForm {
 //        $("input[type='file']").uploadFromClasspath ("/Medal Star (1).png"); // по дефолту знает что в ресурсах лежит , только для type=file
         $("#currentAddress").setValue("Current Address");
 
-        $("#state").$(byText("Haryana")).click(); // good
-//        $("#react-select-3-input").setValue("Haryana").pressEnter(); // so-so
+//        $("#state").$(byText("Haryana")).click(); // good
+        $("#react-select-3-input").setValue("Haryana").pressEnter(); // so-so
         $("#state").shouldHave(text("Haryana"));
 
-        $("#city").$(byText("Panipat")).click(); // good
-//        $("#react-select-4-input").setValue("Panipat").pressEnter();; //so-so
+//        $("#city").$(byText("Panipat")).click(); // good
+        $("#react-select-4-input").setValue("Panipat").pressEnter();; //so-so
         $("#city").shouldHave(text("Panipat"));
 
         $("#submit").click();
         // Ждем появления модального окна
         $(".modal-content").shouldBe(visible);
-//        $(".modal-content").should(appear);
+        $(".modal-content").should(appear);
 
         $("#example-modal-sizes-title-lg").shouldHave(text("Thanks for submitting the form"));
         $(".modal-body .table-responsive").shouldHave(text("Kirill Skotings"));
