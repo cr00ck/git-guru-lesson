@@ -60,7 +60,7 @@ public class RegistrationPage {
 
     ;
 
-    public RegistrationPage setuserEmail(String email) {
+    public RegistrationPage setUserEmail(String email) {
         emailLocator.shouldBe(visible).setValue(email);
         return this;
     }

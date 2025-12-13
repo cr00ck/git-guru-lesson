@@ -23,7 +23,7 @@ public class DemoqaPracticeForm_PO extends BaseConfigs {
         // Заполняем поля с ожиданиями
                         .setFirstName("Kirill")
                         .setLastName("Skotings")
-                        .setuserEmail("ggg@mail.ru")
+                        .setUserEmail("ggg@mail.ru")
                         .setGender("Male")
                         .setNumber("1234567890")
                         .setDateOfBirth("July","1999");
@@ -36,8 +36,7 @@ public class DemoqaPracticeForm_PO extends BaseConfigs {
                         .clickSubmit()
         // Ждем появления модального окна
 
-        // Проверки в таблице по пунктам
-                                .assertModalTable("Student Name","Kirill Skotings")
+                                 .assertModalTable("Student Name","Kirill Skotings")
                                 .assertModalTable("Student Email","ggg@mail.ru")
                                 .assertModalTable("Gender","Male")
                                 .assertModalTable("Mobile","1234567890")
@@ -45,7 +44,7 @@ public class DemoqaPracticeForm_PO extends BaseConfigs {
                                 .assertModalTable("Subjects","Biology")
                                 .assertModalTable("Hobbies","Reading")
                                 .assertModalTable("Hobbies","Reading")
-                                .assertModalTable("Picture","Medal Star (1).png")
+                                .assertModalTable("Picture", "img/Medal Star (1).png")
                                 .assertModalTable("Address","Current Address")
                                 .assertModalTable("State and City","Haryana Panipat");
 
