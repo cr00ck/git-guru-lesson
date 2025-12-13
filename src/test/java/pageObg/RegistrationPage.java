@@ -20,9 +20,9 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
 public class RegistrationPage {
-    public static SelenideElement firstNameLocator = $("#firstName"),
+    private SelenideElement firstNameLocator = $("#firstName"),
             lastNameLocator = $("#lastName"),
-            emailLocator = $("#lastName"),
+            emailLocator = $("#userEmail"),
             genderLocator = $("label[for='gender-radio-1']"),
             numberLocator = $("#userNumber"),
             subjectInput = $("#subjectsInput"),
@@ -35,14 +35,15 @@ public class RegistrationPage {
     cityInput =  $("#react-select-4-input"),
     submitClick =  $("#submit"),
     tableLocator =  $(".modal-content"),
-            tableTitleLocator =  $("#example-modal-sizes-title-lg").shouldBe(visible),
+            tableTitleLocator =  $("#example-modal-sizes-title-lg"),
             tableContentLocator =  $(".table-responsive");
     public String filePatH =  "src/test/resources/Medal Star (1).png";
 
     public RegistrationPage openPage() {
         open("/automation-practice-form");
+        // Ждем, когда страница загрузится
+        $(".practice-form-wrapper").shouldBe(visible);
         return this;
-
     }
 
     public RegistrationPage setFirstName(String name) {
@@ -137,8 +138,6 @@ public class RegistrationPage {
     }
     public RegistrationPage clickSubmit() {
         submitClick.click();
-        tableLocator.shouldBe(visible);
-        tableLocator.should(appear);
         return this;
     }
     public RegistrationPage assertModalTable(String key, String value) {

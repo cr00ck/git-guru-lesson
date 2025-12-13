@@ -1,23 +1,25 @@
-package pageObg;
+package tetingPractices;
 import org.junit.jupiter.api.Test;
-import pages.components.CalendarComponent;
+import pageObg.BaseConfigs;
+import pageObg.RegistrationPage;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.open;
 
 public class DemoqaPracticeForm_PO extends BaseConfigs {
     // ctrl+shift+L жмем после кажного готового теста, чтобы оптимизировать и удалить все лишнее
 
-    RegistrationPage registrationPage = new RegistrationPage();
-    CalendarComponent calendarComponent = new CalendarComponent();
+
 
     @Test
     void demoga_practice() {
 
         // Установки для теста
         BaseConfigs.setUp();
+        RegistrationPage registrationPage = new RegistrationPage();
 
-        // Открываем страницу
-        registrationPage.openPage()
+        registrationPage.openPage();
+        registrationPage
         // Заполняем поля с ожиданиями
                         .setFirstName("Kirill")
                         .setLastName("Skotings")
@@ -33,7 +35,7 @@ public class DemoqaPracticeForm_PO extends BaseConfigs {
                         .setCity("Panipat")
                         .clickSubmit()
         // Ждем появления модального окна
-                        .clickSubmit()
+
         // Проверки в таблице по пунктам
                                 .assertModalTable("Student Name","Kirill Skotings")
                                 .assertModalTable("Student Email","ggg@mail.ru")

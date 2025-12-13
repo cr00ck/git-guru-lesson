@@ -1,4 +1,4 @@
-package firstPractices;
+package tetingPractices;
 
 import org.junit.jupiter.api.Test;
 

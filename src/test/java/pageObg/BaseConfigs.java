@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeAll;
 
 public class BaseConfigs {
     @BeforeAll
-    static void setUp() {
+    public static void setUp() {
         Configuration.browserSize = "1920x1080";
         Configuration.browser = "chrome"; // по умолчанию установлен
         Configuration.pageLoadStrategy = "eager";

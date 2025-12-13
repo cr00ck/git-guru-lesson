@@ -1,14 +1,12 @@
-package firstPractices;
+package tetingPractices;
 
 import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.WebElement;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.DragAndDropOptions.to;
 import static com.codeborne.selenide.Selenide.*;
-import static com.codeborne.selenide.impl.Html.text;
 
 public class GithubDragAndDropTest {
     @BeforeAll
