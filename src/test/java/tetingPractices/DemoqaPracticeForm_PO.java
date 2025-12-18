@@ -5,6 +5,7 @@ import pageObg.RegistrationPage;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
+import static dataFaker.DataFakerRamdom.*;
 
 public class DemoqaPracticeForm_PO extends BaseConfigs {
     // ctrl+shift+L жмем после кажного готового теста, чтобы оптимизировать и удалить все лишнее
@@ -21,14 +22,14 @@ public class DemoqaPracticeForm_PO extends BaseConfigs {
         registrationPage.openPage();
         registrationPage
         // Заполняем поля с ожиданиями
-                        .setFirstName("Kirill")
-                        .setLastName("Skotings")
-                        .setUserEmail("ggg@mail.ru")
-                        .setGender("Male")
-                        .setNumber("1234567890")
+                        .setFirstName(firstNameFaker)
+                        .setLastName(lastNameFaker)
+                        .setUserEmail(emailFaker)
+                        .setGender(getRandomGender)
+                        .setNumber(getRandomPhone10Num())
                         .setDateOfBirth("July","1999");
         registrationPage.setSubject("Biology")
-                        .setHobbies("Reading")
+                        .setHobbies(getRandomHobbyFromArray())
                         .setFile()
                         .setAddress("Current Address")
                         .setState("Haryana")

@@ -20,7 +20,7 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
 public class RegistrationPage {
-    private SelenideElement firstNameLocator = $("#firstName"),
+    public static SelenideElement firstNameLocator = $("#firstName"),
             lastNameLocator = $("#lastName"),
             emailLocator = $("#userEmail"),
             genderLocator = $("label[for='gender-radio-1']"),
@@ -91,11 +91,10 @@ public class RegistrationPage {
         return this;
     }
 
-    public RegistrationPage setHobbies(String... hobbies) {
+    public RegistrationPage setHobbies(String hobby) {
         // Сбрасываем чекбоксы
 //        $(byText("Male")); //хороший вариант но если будут другие локали то другой язык
         // Устанавливаем выбранные
-        for (String hobby : hobbies) {
             if (hobby.equals("Sports")) {
                 hobbiesOneCheckbox.click();
             } else if (hobby.equals("Reading")) {
@@ -103,10 +102,11 @@ public class RegistrationPage {
             } else if (hobby.equals("Music")) {
                 hobbiesThreeCheckbox.click();
             }
-        }
+
 
         return this;
     }
+
 
     public RegistrationPage setFile() {
         fileInput.uploadFile(new File(filePatH));

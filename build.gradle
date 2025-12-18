@@ -16,9 +16,10 @@ repositories {
 
 dependencies {
     // Стабильная версия Selenide с хорошей поддержкой JDK 21
-    testImplementation 'com.codeborne:selenide:7.3.2'
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
-    testImplementation 'org.slf4j:slf4j-simple:2.0.9'
+    testImplementation 'com.codeborne:selenide:7.3.2',
+    'org.junit.jupiter:junit-jupiter:5.10.1',
+    'org.slf4j:slf4j-simple:2.0.9',
+            'net.datafaker:datafaker:2.5.2'
 }
 
 test {
