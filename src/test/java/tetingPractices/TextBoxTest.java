@@ -1,12 +1,12 @@
 package tetingPractices;
 import org.junit.jupiter.api.Test;
-import pageObg.BaseConfigs;
+import pageObg.BaseConfigsDemoqa;
 import pageObg.TextBoxPage;
 
 import static dataFaker.DataFakerRamdom.*;
 
 
-public class TextBoxTest  extends BaseConfigs {
+public class TextBoxTest  extends BaseConfigsDemoqa {
     // ctrl+shift+L жмем после кажного готового теста, чтобы оптимизировать и удалить все лишнее
 
     // используем кастомные методы для генерации данных
@@ -20,7 +20,7 @@ public class TextBoxTest  extends BaseConfigs {
     void textBoxForm() {
         TextBoxPage textbopage = new TextBoxPage();
         // Установки для теста
-        BaseConfigs.setUp();
+        BaseConfigsDemoqa.setUp();
 textbopage.openPage()
         .setFullName(fullName)
         .setEmail(email)

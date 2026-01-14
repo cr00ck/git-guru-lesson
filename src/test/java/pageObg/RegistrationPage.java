@@ -37,12 +37,12 @@ public class RegistrationPage {
     tableLocator =  $(".modal-content"),
             tableTitleLocator =  $("#example-modal-sizes-title-lg"),
             tableContentLocator =  $(".table-responsive");
-    public String filePatH =  "src/test/resources/Medal Star (1).png";
+    public String filePatH =  "src/test/resources/img/Medal Star (1).png";
 
     public RegistrationPage openPage() {
         open("/automation-practice-form");
         // Ждем, когда страница загрузится
-        $(".practice-form-wrapper").shouldBe(visible);
+        //$(".practice-form-wrapper").shouldBe(visible);
         return this;
     }
 

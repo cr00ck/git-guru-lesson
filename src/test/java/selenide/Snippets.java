@@ -19,6 +19,27 @@ public class Snippets {
 
 //    // this is not a full list, just the most common
 //
+//    // Поиск по классу
+//    $(".className");                    // первый элемент с классом
+//    $$(".className");                   // все элементы с классом
+//
+//    // Примеры:
+//    $(".btn-primary");                  // кнопка с классом btn-primary
+//    $$(".menu-item");                   // все элементы с классом menu-item
+//    // По id
+//    $("#userName");                     // элемент с id="userName"
+//
+//    // По атрибуту
+//    $("[data-testid='submit-button']"); // по data-testid
+//    $("[name='username']");             // по name
+//    $("[type='submit']");               // по type
+//    $("[href='https://example.com']");  // по href
+//    $("[href*='mple.com']");  // * - делает не равно, а содержит
+//
+//    // Комбинации
+//    $("input.email-input");             // input с классом email-input
+//    $("button[type='submit'].primary"); // button с type="submit" и классом primary
+//
 //    void browser_command_examples() {
 //        open("https://google.com");
 //        open("/customer/orders");     // -Dselenide.baseUrl=http://123.23.23.1

@@ -12,14 +12,20 @@ public  class DataFakerRamdom {
     public static Faker faker = new Faker(Locale.of("en-US"));
 
     public static String fullNameFaker = faker.name().fullName(),
+    // Было (одно значение на всю жизнь класса), а если вынести это в метод,
+    // то будет каждый раз новое генерироваться
      firstNameFaker = faker.name().firstName(),
      lastNameFaker = faker.name().lastName(),
      emailFaker = faker.internet().emailAddress(),
      currentAddressFaker = faker.address().fullAddress(),
      permanentAddressFaker = faker.address().fullAddress(),
-     genderFaker,
-     phoneFaker = faker.phoneNumber().phoneNumber();
-
+     phoneFaker = faker.phoneNumber().subscriberNumber(10), // "1234567890"
+     addressFaker = faker.address().fullAddress(),// "123 Main St, City"
+     stateFaker = getRandomState(); // Лучшие поместить в метод, чтобы выпадало всегда новое значени,
+    // тк если в переменной будет всегда одно и тоже во всех тестах выпадать.
+    public static String getRandomState() {
+        return faker.options().option("NCR", "Uttar Pradesh","Haryana","Rajasthan");  // Случайно при КАЖДОМ вызове
+    }
     public static String getRandomString(int length) {
         String ABC = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         SecureRandom srnd = new SecureRandom();
@@ -73,11 +79,27 @@ public  class DataFakerRamdom {
         String[] hobbys = {"Sports", "Reading","Music"};
         return getRandomItemFromArray(hobbys);
     }
-
-    public static String getRandomUUID(String[] array) {
-        String uuid = UUID.randomUUID().toString();
-        return"uuid = " + uuid ;
+    // два метода работают вместе
+    public static String getRandomSubjectFromArray() {
+        String[] subject = {"Biology", "English","Chemistry","History","Maths","Hindi","Economics"};
+        return getRandomItemFromArray(subject);
     }
+
+    // два метода работают вместе
+    public static String getRandomCityDependsOnState(String state) {
+        if(state.equals("NCR")){
+            return faker.options().option("Delhi","Gurgaon","Noida");
+        } else if (state.equals("Uttar Pradesh")){
+            return faker.options().option("Agra","Lucknow","Merrut");
+        } else if (state.equals("Haryana")) {
+            return faker.options().option("Karnal", "Panipat");
+        }
+        else return "Unknown";
+    }
+
+        public static String getRandomUUID() {
+            return UUID.randomUUID().toString();
+        }
 
 
 

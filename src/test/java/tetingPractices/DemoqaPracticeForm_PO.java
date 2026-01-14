@@ -1,13 +1,13 @@
 package tetingPractices;
 import org.junit.jupiter.api.Test;
-import pageObg.BaseConfigs;
+import pageObg.BaseConfigsDemoqa;
 import pageObg.RegistrationPage;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 import static dataFaker.DataFakerRamdom.*;
 
-public class DemoqaPracticeForm_PO extends BaseConfigs {
+public class DemoqaPracticeForm_PO extends BaseConfigsDemoqa {
     // ctrl+shift+L жмем после кажного готового теста, чтобы оптимизировать и удалить все лишнее
 
 
@@ -16,7 +16,7 @@ public class DemoqaPracticeForm_PO extends BaseConfigs {
     void demoga_practice() {
 
         // Установки для теста
-        BaseConfigs.setUp();
+        BaseConfigsDemoqa.setUp();
         RegistrationPage registrationPage = new RegistrationPage();
 
         registrationPage.openPage();
@@ -25,15 +25,15 @@ public class DemoqaPracticeForm_PO extends BaseConfigs {
                         .setFirstName(firstNameFaker)
                         .setLastName(lastNameFaker)
                         .setUserEmail(emailFaker)
-                        .setGender(getRandomGender)
-                        .setNumber(getRandomPhone10Num())
+                        .setGender(getRandomGender())
+                        .setNumber(phoneFaker)
                         .setDateOfBirth("July","1999");
-        registrationPage.setSubject("Biology")
+        registrationPage.setSubject(getRandomSubjectFromArray())
                         .setHobbies(getRandomHobbyFromArray())
                         .setFile()
-                        .setAddress("Current Address")
-                        .setState("Haryana")
-                        .setCity("Panipat")
+                        .setAddress(addressFaker)
+                        .setState(stateFaker)
+                        .setCity(getRandomCityDependsOnState(stateFaker))
                         .clickSubmit()
         // Ждем появления модального окна
 

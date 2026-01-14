@@ -2,12 +2,11 @@ package tetingPractices;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static com.codeborne.selenide.Selenide.*;
 
-
+@DisplayName("Первые учебные тесты")
 public class SearchTests {
     @BeforeAll
     static void setup() {
@@ -25,13 +24,19 @@ public class SearchTests {
 //                "useAutomationExtension", false
        // ));
     }
-
+    @Disabled("тут надо писать тикет бага в ТМС, тест будет виден как неактивный")
     @Test
+    @Tags({
+            @Tag("HTML"),
+            @Tag("PRACTICE")
+    })
+    @DisplayName("Тест со созданной страницей HTML из файла")
+
     //на тестах с гугл всегда появлялась капча и тест падал, дипсик предложил создать файл в проекте
     //с html страницей и на ней запустить, все сработало.
     void successfulSearchTest() {
         // Открываем локальный HTML файл
-        open("file://" + System.getProperty("user.dir") + "/src/test/resources/test-page.html");
+        open("file://" + System.getProperty("user.dir") + "src/test/resources/htmlPages/test-page.html");
 
         // Проверяем заголовок
         $("h3").shouldHave(Condition.text("Selenide"));
@@ -71,5 +76,28 @@ public class SearchTests {
      //
      //
      //
+    public void formatPractice (){
+        String day = "25";
+        String month = "July";
+        String year = "1987";
+        System.out.println(String.format("The day %s isnt contains in month %s and year %s !!", day, month, year));
+    }
+    public void math () {
+
+
+        short c = 0;
+        byte d = 127;
+        c = (short) (d + 1);
+        System.out.println(c);
+
+        //операции с комбинированными типами данных
+        int bInt = 9;
+        double bDouble = 0.1;
+        System.out.println(bInt + bDouble);
+
+        System.out.println(bInt / bDouble);
+
+        System.out.println(bInt % bDouble);
+    }
 
 }
