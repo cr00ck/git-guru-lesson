@@ -1,4 +1,4 @@
-package tetingPractices;
+package testingPractices;
 
 import org.junit.jupiter.api.Test;
 

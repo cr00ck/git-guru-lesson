@@ -1,4 +1,4 @@
-package tetingPractices;
+package testingPractices;
 
 import DataEnum.RanepaChanels;
 import com.codeborne.selenide.Configuration;

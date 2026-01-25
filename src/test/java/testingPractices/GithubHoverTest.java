@@ -1,4 +1,4 @@
-package tetingPractices;
+package testingPractices;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;

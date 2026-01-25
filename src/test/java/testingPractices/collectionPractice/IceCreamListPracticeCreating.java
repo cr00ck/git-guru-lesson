@@ -1,4 +1,4 @@
-package tetingPractices.collectionPractice;
+package testingPractices.collectionPractice;
 
 import java.util.ArrayList;
 import java.util.Comparator;
