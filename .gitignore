@@ -1,7 +1,9 @@
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
-
+#если нужно игнорировать только build.gradle и settings.gradle
+build.gradle
+settings.gradle
 
 !**/src/main/**/build/
 !**/src/test/**/build/
