@@ -1,19 +1,15 @@
-package pageObg;
+package testingPractices.allureStepsPracticeKlasses;
 
 import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.Step;
-import io.qameta.allure.selenide.AllureSelenide;
-import org.junit.jupiter.api.Test;
+import pageObg.TextBoxPage;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
-import static dataFaker.DataFakerRamdom.*;
-import static dataFaker.DataFakerRamdom.getRandomAddress;
 
-public class TextBoxPage {
+public class TextBoxAllureStepsPage {
 
     private SelenideElement fullNameLocator = $("#userName"),
             emailLocator = $("#userEmail"),
@@ -21,40 +17,40 @@ public class TextBoxPage {
             permanentAddressInput = $("#permanentAddress"),
             submitButton = $("#submit");
 
-    public TextBoxPage openPage(){
+    @Step("Отрываем главную страницу")
+    public TextBoxAllureStepsPage openPage(){
         open("/text-box");
         return this;
     }
-
-    public TextBoxPage setFullName(String name) {
+    @Step("Вводим полное имя {name}")
+    public TextBoxAllureStepsPage setFullName(String name) {
         fullNameLocator.shouldBe(visible).setValue(name);
         return this;
     }
-
-    public TextBoxPage setEmail(String name) {
+    @Step("Вводим емайл {name}")
+    public TextBoxAllureStepsPage setEmail(String name) {
         emailLocator.shouldBe(visible).setValue(name);
         return this;
     }
-
-    public TextBoxPage setCurrentAddress(String name) {
+    @Step("Вводим постоянный адрес {name}")
+    public TextBoxAllureStepsPage setCurrentAddress(String name) {
         currentAddressInput.shouldBe(visible).setValue(name);
         return this;
     }
-
-    public TextBoxPage setPermanentAddress(String name) {
+    @Step("Вводим временный адрес {name}")
+    public TextBoxAllureStepsPage setPermanentAddress(String name) {
         permanentAddressInput.shouldBe(visible).setValue(name);
         return this;
     }
-
-    public TextBoxPage clickSubmit() {
+    @Step("Клик на сабмит")
+    public TextBoxAllureStepsPage clickSubmit() {
         submitButton.click();
         return this;
     }
-
-    public TextBoxPage assertInsideTable (String value){
+    @Step("Проверки в таблице по пунктам {value}")
+    public TextBoxAllureStepsPage assertInsideTable (String value){
         $("#output").shouldBe(visible).shouldHave(text(value));
         return this;
     }
 
 }
-

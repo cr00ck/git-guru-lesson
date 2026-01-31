@@ -1,4 +1,6 @@
 package testingPractices;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.Test;
 import pageObg.BaseConfigsDemoqa;
 import pageObg.TextBoxPage;
@@ -18,6 +20,7 @@ public class TextBoxTest  extends BaseConfigsDemoqa {
 
     @Test
     void textBoxForm() {
+        SelenideLogger.addListener("allure", new AllureSelenide()); // чтобы видеть шаги и скрины в allure
         TextBoxPage textbopage = new TextBoxPage();
         // Установки для теста
         BaseConfigsDemoqa.setUp();

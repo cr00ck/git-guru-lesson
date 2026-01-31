@@ -9,6 +9,7 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
+
 import com.codeborne.selenide.SelenideElement;
 import pages.components.CalendarComponent;
 
@@ -26,18 +27,18 @@ public class RegistrationPage {
             genderLocator = $("label[for='gender-radio-1']"),
             numberLocator = $("#userNumber"),
             subjectInput = $("#subjectsInput"),
-    hobbiesOneCheckbox =  $("label[for='hobbies-checkbox-1']"),
-    hobbiesTwoCheckbox =  $("label[for='hobbies-checkbox-2']"),
-    hobbiesThreeCheckbox =  $("label[for='hobbies-checkbox-3']"),
-    fileInput =  $("input[type='file']"),
-    addressInput =  $("#currentAddress"),
-    stateInput =  $("#react-select-3-input"),
-    cityInput =  $("#react-select-4-input"),
-    submitClick =  $("#submit"),
-    tableLocator =  $(".modal-content"),
-            tableTitleLocator =  $("#example-modal-sizes-title-lg"),
-            tableContentLocator =  $(".table-responsive");
-    public String filePatH =  "src/test/resources/img/Medal Star (1).png";
+            hobbiesOneCheckbox = $("label[for='hobbies-checkbox-1']"),
+            hobbiesTwoCheckbox = $("label[for='hobbies-checkbox-2']"),
+            hobbiesThreeCheckbox = $("label[for='hobbies-checkbox-3']"),
+            fileInput = $("input[type='file']"),
+            addressInput = $("#currentAddress"),
+            stateInput = $("#react-select-3-input"),
+            cityInput = $("#react-select-4-input"),
+            submitClick = $("#submit"),
+            tableLocator = $(".modal-content"),
+            tableTitleLocator = $("#example-modal-sizes-title-lg"),
+            tableContentLocator = $(".table-responsive");
+    public String filePatH = "src/test/resources/img/Medal Star (1).png";
 
     public RegistrationPage openPage() {
         open("/automation-practice-form");
@@ -81,10 +82,11 @@ public class RegistrationPage {
 
     public RegistrationPage setDateOfBirth(String month, String year) {
         $("#dateOfBirthInput").click();
-        new CalendarComponent().setCalendar(month,year);
+        new CalendarComponent().setCalendar(month, year);
 
         return this;
     }
+
     public RegistrationPage setSubject(String subject_Biology_) {
         subjectInput.setValue(subject_Biology_).pressEnter();
 
@@ -95,13 +97,13 @@ public class RegistrationPage {
         // Сбрасываем чекбоксы
 //        $(byText("Male")); //хороший вариант но если будут другие локали то другой язык
         // Устанавливаем выбранные
-            if (hobby.equals("Sports")) {
-                hobbiesOneCheckbox.click();
-            } else if (hobby.equals("Reading")) {
-                hobbiesTwoCheckbox.click();
-            } else if (hobby.equals("Music")) {
-                hobbiesThreeCheckbox.click();
-            }
+        if (hobby.equals("Sports")) {
+            hobbiesOneCheckbox.click();
+        } else if (hobby.equals("Reading")) {
+            hobbiesTwoCheckbox.click();
+        } else if (hobby.equals("Music")) {
+            hobbiesThreeCheckbox.click();
+        }
 
 
         return this;
@@ -115,11 +117,13 @@ public class RegistrationPage {
 
         return this;
     }
+
     public RegistrationPage setAddress(String currentAddress) {
         addressInput.setValue(currentAddress);
 
         return this;
     }
+
     public RegistrationPage setState(String state_Haryana) {
         stateInput.setValue(state_Haryana).pressEnter(); // so-so
         $("#state").shouldHave(text(state_Haryana));
@@ -128,18 +132,22 @@ public class RegistrationPage {
 
         return this;
     }
+
     public RegistrationPage setCity(String city_Panipat) {
-        cityInput.setValue(city_Panipat).pressEnter();; //so-so
+        cityInput.setValue(city_Panipat).pressEnter();
+        ; //so-so
         $("#city").shouldHave(text(city_Panipat));
 //      $("#city").$(byText("Panipat")).click(); // good
 
 
         return this;
     }
+
     public RegistrationPage clickSubmit() {
         submitClick.click();
         return this;
     }
+
     public RegistrationPage assertModalTable(String key, String value) {
         tableTitleLocator.shouldHave(text("Thanks for submitting the form"));
         tableContentLocator.$(byText(key)).parent()

@@ -1,6 +1,9 @@
 package selenide;
 
 import com.codeborne.selenide.*;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
 
 import java.io.File;
@@ -14,6 +17,9 @@ import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.*;
 
 public class Snippets {
+//    @Test
+//    void textBoxForm() { // после названия теста пишем:
+//        SelenideLogger.addListener("allure", new AllureSelenide()); // чтобы видеть шаги и скрины в allure
 
     // ctrl+shift+L жмем после кажного готового теста, чтобы оптимизировать и удалить все лишнее
 
@@ -35,6 +41,9 @@ public class Snippets {
 //    $("[type='submit']");               // по type
 //    $("[href='https://example.com']");  // по href
 //    $("[href*='mple.com']");  // * - делает не равно, а содержит
+//    $(linkText("vysokikh/allure-example")).click;  // клик по ссылке
+//    $(withText("example #80")).should(Condition.exist);  // проверка текста
+
 //
 //    // Комбинации
 //    $("input.email-input");             // input с классом email-input
