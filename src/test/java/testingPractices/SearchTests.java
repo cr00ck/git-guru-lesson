@@ -2,6 +2,7 @@ package testingPractices;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
 
 import static com.codeborne.selenide.Selenide.*;
@@ -10,10 +11,13 @@ import static com.codeborne.selenide.Selenide.*;
 public class SearchTests {
     @BeforeAll
     static void setup() {
+        // Автоматически скачает и настроит ChromeDriver
+        WebDriverManager.chromedriver().setup();
         Configuration.browser = "chrome";
         //Configuration.timeout = 10000;
         //Configuration.pageLoadTimeout = 30000; // Увеличиваем таймаут загрузки
         Configuration.browserSize = "1920x1080";
+        Configuration.headless = true;
 
         // Настройки для стабильности
         Configuration.pageLoadStrategy = "eager";

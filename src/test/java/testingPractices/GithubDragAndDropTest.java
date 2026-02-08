@@ -1,6 +1,7 @@
 package testingPractices;
 
 import com.codeborne.selenide.Configuration;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -14,6 +15,8 @@ public class GithubDragAndDropTest {
     @DisplayName("Проверка на перемещение квадратов")
     @BeforeAll
     static void setUp() {
+        // Автоматически скачает и настроит ChromeDriver
+        WebDriverManager.chromedriver().setup();
         open("https://the-internet.herokuapp.com/drag_and_drop");
         Configuration.browserSize = "1920x1080";
         Configuration.browser = "chrome";
@@ -22,6 +25,7 @@ public class GithubDragAndDropTest {
         Configuration.holdBrowserOpen = false;
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
+        Configuration.headless = true;
     }
 
     @Test

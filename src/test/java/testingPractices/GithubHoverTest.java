@@ -3,6 +3,7 @@ package testingPractices;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -18,6 +19,8 @@ import static com.codeborne.selenide.WebDriverConditions.url;
 public class GithubHoverTest {
     @BeforeAll
     static void setUp() {
+        // Автоматически скачает и настроит ChromeDriver
+        WebDriverManager.chromedriver().setup();
         Configuration.browserSize = "1920x1080";
         Configuration.browser = "chrome";
         Configuration.pageLoadStrategy = "eager";
@@ -25,6 +28,7 @@ public class GithubHoverTest {
         Configuration.holdBrowserOpen = false;
         Configuration.screenshots = false;
         Configuration.savePageSource = false;
+        Configuration.headless = true;
 
     }
 

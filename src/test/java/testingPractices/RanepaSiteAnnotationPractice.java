@@ -2,6 +2,7 @@ package testingPractices;
 
 import DataEnum.RanepaChanels;
 import com.codeborne.selenide.Configuration;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,10 +19,13 @@ public class RanepaSiteAnnotationPractice {
 
     @BeforeAll
     static void setup() {
+        // Автоматически скачает и настроит ChromeDriver
+        WebDriverManager.chromedriver().setup();
         Configuration.browser = "chrome";
         Configuration.browserSize = "1920x1080";
         Configuration.timeout = 10000;
         Configuration.pageLoadStrategy = "eager";
+        Configuration.headless = true;
     }
 
     @ParameterizedTest(name = "Проверка канала: {0}")
