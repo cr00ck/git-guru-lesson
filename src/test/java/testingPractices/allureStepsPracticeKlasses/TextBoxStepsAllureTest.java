@@ -3,6 +3,7 @@ import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.*;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import pageObg.BaseConfigsDemoqa;
 import pageObg.TextBoxPage;
@@ -79,6 +80,7 @@ public class TextBoxStepsAllureTest extends BaseConfigsDemoqa {
 
     }
     @Test
+    @Tag("SEARCH")
     void textBoxFormAnnotatedTest() { //  такой подход используется если степы !! переиспользуются !!
         // и уже в самой странице TextBoxAllureStepsPage с методами пишем стэпы
         SelenideLogger.addListener("allure", new AllureSelenide());

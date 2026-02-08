@@ -1,5 +1,6 @@
 package testingPractices;
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Condition.text;
@@ -9,6 +10,7 @@ import static com.codeborne.selenide.Selenide.*;
 public class GithubTests {
 
     @Test
+    @Tag("SEARCH")
     void HomeworkFindJUnit5 (){
 
         //- Откройте страницу Selenide в Github

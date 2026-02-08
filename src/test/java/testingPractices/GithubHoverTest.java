@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 
@@ -28,6 +29,7 @@ public class GithubHoverTest {
     }
 
     @Test
+    @Tag("SEARCH")
     void testWithHover() {
         // ctrl+shift+L жмем после кажного готового теста, чтобы оптимизировать и удалить все лишнее
 

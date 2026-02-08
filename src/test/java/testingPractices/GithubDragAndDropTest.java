@@ -3,6 +3,7 @@ package testingPractices;
 import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Condition.text;
@@ -24,6 +25,7 @@ public class GithubDragAndDropTest {
     }
 
     @Test
+    @Tag("SEARCH")
         //(опциональное) Запрограммируйте Drag&Drop с помощью Selenide.actions()
     void dragAndDropTest() {
         // ctrl+shift+L жмем после кажного готового теста, чтобы оптимизировать и удалить все лишнее
@@ -42,7 +44,8 @@ public class GithubDragAndDropTest {
         //sleep(5000);
     }
     @Test
-        void dragAndDropTestSecontMethod () {
+    @Tag("SEARCH")
+        void dragAndDropTestSecondMethod () {
         //- В Selenide есть команда $(element).dragAndDrop($(to-element)),
         // проверьте работает ли тест, если использовать её вместо actions()
 

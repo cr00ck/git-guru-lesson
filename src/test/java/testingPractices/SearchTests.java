@@ -28,6 +28,7 @@ public class SearchTests {
     @Test
     @Tags({
             @Tag("HTML"),
+            @Tag("SEARCH"),
             @Tag("PRACTICE")
     })
     @DisplayName("Тест со созданной страницей HTML из файла")
@@ -52,6 +53,8 @@ public class SearchTests {
         System.out.println("Тест успешно выполнен!");
     }
     @Test
+    @Tag("SEARCH")
+
     void testDuckDuckGo() {
         open("https://duckduckgo.com/");
         $("#searchbox_input").setValue("Selenide").pressEnter();
