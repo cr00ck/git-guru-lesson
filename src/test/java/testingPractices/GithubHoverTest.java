@@ -19,16 +19,20 @@ import static com.codeborne.selenide.WebDriverConditions.url;
 public class GithubHoverTest {
     @BeforeAll
     static void setUp() {
-        // Автоматически скачает и настроит ChromeDriver
-        WebDriverManager.chromedriver().setup();
-        Configuration.browserSize = "1920x1080";
-        Configuration.browser = "chrome";
-        Configuration.pageLoadStrategy = "eager";
 
-        Configuration.holdBrowserOpen = false;
-        Configuration.screenshots = false;
-        Configuration.savePageSource = false;
+        // СИСТЕМНЫЙ ChromeDriver
+        System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
+
+        // Минимальные настройки
+        Configuration.browserSize = "1920x1080";
         Configuration.headless = true;
+        Configuration.timeout = 15000;
+
+        // Отключаем все, что может мешать
+        Configuration.browser = "chrome";
+        Configuration.reopenBrowserOnFail = false;
+        Configuration.holdBrowserOpen = false;
+
 
     }
 

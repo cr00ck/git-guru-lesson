@@ -15,17 +15,22 @@ public class GithubDragAndDropTest {
     @DisplayName("Проверка на перемещение квадратов")
     @BeforeAll
     static void setUp() {
-        // Автоматически скачает и настроит ChromeDriver
-        WebDriverManager.chromedriver().setup();
-        open("https://the-internet.herokuapp.com/drag_and_drop");
-        Configuration.browserSize = "1920x1080";
-        Configuration.browser = "chrome";
-        Configuration.pageLoadStrategy = "eager";
 
-        Configuration.holdBrowserOpen = false;
-        Configuration.screenshots = false;
-        Configuration.savePageSource = false;
+        // СИСТЕМНЫЙ ChromeDriver
+        System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
+
+        // Минимальные настройки
+        Configuration.browserSize = "1920x1080";
         Configuration.headless = true;
+        Configuration.timeout = 15000;
+
+        // Отключаем все, что может мешать
+        Configuration.browser = "chrome";
+        Configuration.reopenBrowserOnFail = false;
+        Configuration.holdBrowserOpen = false;
+
+        open("https://the-internet.herokuapp.com/drag_and_drop");
+
     }
 
     @Test

@@ -19,13 +19,18 @@ public class RanepaSiteAnnotationPractice {
 
     @BeforeAll
     static void setup() {
-        // Автоматически скачает и настроит ChromeDriver
-        WebDriverManager.chromedriver().setup();
-        Configuration.browser = "chrome";
+        // СИСТЕМНЫЙ ChromeDriver
+        System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
+
+        // Минимальные настройки
         Configuration.browserSize = "1920x1080";
-        Configuration.timeout = 10000;
-        Configuration.pageLoadStrategy = "eager";
         Configuration.headless = true;
+        Configuration.timeout = 15000;
+
+        // Отключаем все, что может мешать
+        Configuration.browser = "chrome";
+        Configuration.reopenBrowserOnFail = false;
+        Configuration.holdBrowserOpen = false;
     }
 
     @ParameterizedTest(name = "Проверка канала: {0}")
