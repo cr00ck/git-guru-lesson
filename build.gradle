@@ -1,0 +1,154 @@
+plugins {
+    id 'java'
+    id 'io.qameta.allure' version "2.11.2"
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+allure {
+    version = "2.24.0"
+
+    adapter {
+        autoconfigure.set(true)
+
+        frameworks {
+            junit5 {
+                adapterVersion.set("2.24.0")
+                enabled.set(true)
+                autoconfigureListeners.set(true)
+            }
+        }
+    }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'io.qameta.allure:allure-junit5:2.24.0'
+    testImplementation 'io.qameta.allure:allure-selenide:2.24.0'
+
+    testImplementation 'net.datafaker:datafaker:2.5.2'
+    testImplementation 'com.codeborne:selenide:7.0.4'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
+    testImplementation 'org.slf4j:slf4j-simple:2.0.9'
+    testImplementation 'org.seleniumhq.selenium:selenium-java:4.39.0'
+    testImplementation 'commons-io:commons-io:2.21.0'
+    testImplementation 'com.codeborne:pdf-test:1.8.1'
+    testImplementation 'com.codeborne:xls-test:1.4.3'
+    testImplementation 'com.opencsv:opencsv:5.12.0'
+    testImplementation 'com.google.code.gson:gson:2.10.1'
+    testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.10.0'
+    testImplementation 'org.assertj:assertj-core:3.25.3'
+    testImplementation 'net.javacrumbs.json-unit:json-unit-assertj:3.2.2'
+
+}
+
+tasks.withType(Test) {
+    useJUnitPlatform()
+
+    systemProperties = [
+            'selenide.browser': 'chrome',
+            'selenide.headless': 'false',
+            'allure.results.directory': "$buildDir/allure-results",
+            'allure.report.directory': "$buildDir/reports/allure-report"
+    ]
+
+    testLogging {
+        lifecycle {
+            events "passed", "skipped", "failed", "standard_error", "standard_out"
+            //exeptionFormat "short"
+        }
+    }
+}
+// типы тасков по тэгам
+task simple_test(type: Test) {
+    useJUnitPlatform{
+        includeTags("SEARCH")
+    }
+}
+task ui_tests(type: Test) {
+    useJUnitPlatform {
+        includeTags("UI")
+    }
+}
+
+task api_tests(type: Test) {
+    useJUnitPlatform {
+        includeTags("API")
+    }
+}
+
+task smoke_tests(type: Test) {
+    useJUnitPlatform {
+        includeTags("SMOKE", "REGRESSION")  // Два тега
+    }
+}
+//task specific_package_tests(type: Test) {
+//    useJUnitPlatform {
+//        includePackages("com.example.ui")  // Фильтр по пакету
+//    }
+//}
+
+//task specific_class_tests(type: Test) {
+//    useJUnitPlatform {
+//        includeClassNamePatterns(".*UITest")  // Фильтр по имени класса
+//    }
+//}
+
+// ✅ ИСПРАВЛЕННЫЕ ЗАДАЧИ:
+tasks.register('serveAllure', Exec) {
+    dependsOn test
+    description = 'Serve Allure report'
+    group = 'Reporting'
+
+    doFirst {
+        println "Allure results directory: $buildDir/allure-results"
+        println "Note: Allure CLI must be installed on your system!"
+        println "Install with: scoop install allure"
+    }
+
+    commandLine 'cmd', '/c', 'allure', 'serve', "$buildDir/allure-results"
+}
+
+tasks.register('allureGenerate', Exec) {
+    dependsOn test
+    description = 'Generate Allure report'
+    group = 'Reporting'
+
+    commandLine 'cmd', '/c', 'allure', 'generate',
+            "$buildDir/allure-results",
+            '-o', "$buildDir/reports/allure-report",
+            '--clean'
+}
+
+tasks.register('openReport') {
+    dependsOn allureGenerate
+    description = 'Open Allure report in browser'
+    group = 'Reporting'
+
+    doLast {
+        def reportFile = file("$buildDir/reports/allure-report/index.html")
+        if (reportFile.exists()) {
+            java.awt.Desktop.desktop.browse reportFile.toURI()
+            println "Report opened: $reportFile"
+        } else {
+            println "Report not found at: $reportFile"
+            println "Run './gradlew test allureGenerate' first"
+        }
+    }
+}
+
+// ✅ Добавьте эту задачу, которая работает без установки Allure CLI:
+tasks.register('testAndOpenReport') {
+    dependsOn test, openReport
+    description = 'Run tests and open Allure report'
+    group = 'Verification'
+}
