@@ -31,7 +31,7 @@ public class TextBoxAllureStepsPage {
         $(".text-center").shouldHave(text("Text Box")).shouldBe(visible);
         return this;
     }
-    @Step("Вводим полное имя {name}")
+    @Step("Вводим полное имя ")
     public TextBoxAllureStepsPage setFullName(String name) {
         fullNameLocator.shouldBe(visible).setValue(name);
         return this;

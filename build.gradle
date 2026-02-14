@@ -52,6 +52,9 @@ dependencies {
 
 }
 
+// создает уникальную папку для каждого запуска allure
+def allureResultsDir = "build/allure-results/" + new Date().format('yyyy-MM-dd_HH-mm-ss')
+
 tasks.withType(Test) {
     useJUnitPlatform()
 
@@ -63,7 +66,7 @@ tasks.withType(Test) {
             'selenide.browser': 'chrome',
             'selenide.headless': 'true',  // ← ВАЖНО: true для Jenkins!
             //'selenide.headless': 'false',
-            'allure.results.directory': "$buildDir/allure-results",
+            'allure.results.directory': allureResultsDir, // создает уникальную папку для каждого запуска allure
             'allure.report.directory': "$buildDir/reports/allure-report"
     ]
     jvmArgs = [
@@ -134,7 +137,7 @@ task simple_test(type: Test) {
         commandLine 'cmd', '/c', 'allure', 'serve', "$buildDir/allure-results"
     }
 
-    tasks.register('allureGenerate', Exec) {
+    tasks.register('allureGenerate', Exec) { // в консоли ./gradlew cleanAllureResults
         dependsOn test
         description = 'Generate Allure report'
         group = 'Reporting'
@@ -167,4 +170,15 @@ task simple_test(type: Test) {
         dependsOn test, openReport
         description = 'Run tests and open Allure report'
         group = 'Verification'
-    }
+}
+task cleanAllureResults(type: Delete) {
+    delete "$buildDir/allure-results"
+    delete "$buildDir/reports/allure-report"
+    description = "Очищает папки allure-results и allure-report"
+}
+
+// Если хотите, чтобы clean также удалял allure результаты
+clean {
+    dependsOn cleanAllureResults
+}
+

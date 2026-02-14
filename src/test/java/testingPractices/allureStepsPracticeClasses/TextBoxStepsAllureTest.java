@@ -1,7 +1,9 @@
 package testingPractices.allureStepsPracticeClasses;
 import com.codeborne.selenide.logevents.SelenideLogger;
+import helpers.Attach;
 import io.qameta.allure.*;
 import io.qameta.allure.selenide.AllureSelenide;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -19,6 +21,18 @@ import static io.qameta.allure.Allure.step;
 
 public class TextBoxStepsAllureTest extends BaseConfigsDemoqa {
     // ctrl+shift+L жмем после кажного готового теста, чтобы оптимизировать и удалить все лишнее
+    @AfterEach
+    void addAttachments() {
+        // Прикрепляем скриншот
+        Attach.screenshotAs("Last screenshot");
+        // Прикрепляем page source
+        Attach.pageSource();
+        // Прикрепляем console logs
+        Attach.browserConsoleLogs();
+        // Прикрепляем видео (если используется Selenoid)
+        Attach.addVideo();
+    }
+
 
     // используем кастомные методы для генерации данных
     String fullName = getFullName();
