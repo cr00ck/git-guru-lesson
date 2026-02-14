@@ -168,4 +168,3 @@ task simple_test(type: Test) {
         description = 'Run tests and open Allure report'
         group = 'Verification'
     }
-}
