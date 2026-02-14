@@ -55,6 +55,10 @@ dependencies {
 tasks.withType(Test) {
     useJUnitPlatform()
 
+    // Настройки кодировки - добавьте их здесь
+    systemProperty "file.encoding", "utf-8"
+    systemProperty "console.encoding", "utf-8"
+
     systemProperties = [
             'selenide.browser': 'chrome',
             'selenide.headless': 'true',  // ← ВАЖНО: true для Jenkins!
@@ -67,6 +71,7 @@ tasks.withType(Test) {
             '-Dselenide.headless=true'
     ]
 
+
     testLogging {
         lifecycle {
             events "passed", "skipped", "failed", "standard_error", "standard_out"
@@ -76,27 +81,32 @@ tasks.withType(Test) {
 }
 // типы тасков по тэгам
 task simple_test(type: Test) {
-    useJUnitPlatform{
+    useJUnitPlatform {
         includeTags("SEARCH")
     }
 }
-task ui_tests(type: Test) {
-    useJUnitPlatform {
-        includeTags("UI")
+    task allure_test(type: Test) { // TextBoxStepsAllureTest
+        useJUnitPlatform {
+            includeTags("ALLURE")
+        }
     }
-}
+    task ui_tests(type: Test) {
+        useJUnitPlatform {
+            includeTags("UI")
+        }
+    }
 
-task api_tests(type: Test) {
-    useJUnitPlatform {
-        includeTags("API")
+    task api_tests(type: Test) {
+        useJUnitPlatform {
+            includeTags("API")
+        }
     }
-}
 
-task smoke_tests(type: Test) {
-    useJUnitPlatform {
-        includeTags("SMOKE", "REGRESSION")  // Два тега
+    task smoke_tests(type: Test) {
+        useJUnitPlatform {
+            includeTags("SMOKE", "REGRESSION")  // Два тега
+        }
     }
-}
 //task specific_package_tests(type: Test) {
 //    useJUnitPlatform {
 //        includePackages("com.example.ui")  // Фильтр по пакету
@@ -110,51 +120,52 @@ task smoke_tests(type: Test) {
 //}
 
 // ✅ ИСПРАВЛЕННЫЕ ЗАДАЧИ:
-tasks.register('serveAllure', Exec) {
-    dependsOn test
-    description = 'Serve Allure report'
-    group = 'Reporting'
+    tasks.register('serveAllure', Exec) {
+        dependsOn test
+        description = 'Serve Allure report'
+        group = 'Reporting'
 
-    doFirst {
-        println "Allure results directory: $buildDir/allure-results"
-        println "Note: Allure CLI must be installed on your system!"
-        println "Install with: scoop install allure"
+        doFirst {
+            println "Allure results directory: $buildDir/allure-results"
+            println "Note: Allure CLI must be installed on your system!"
+            println "Install with: scoop install allure"
+        }
+
+        commandLine 'cmd', '/c', 'allure', 'serve', "$buildDir/allure-results"
     }
 
-    commandLine 'cmd', '/c', 'allure', 'serve', "$buildDir/allure-results"
-}
+    tasks.register('allureGenerate', Exec) {
+        dependsOn test
+        description = 'Generate Allure report'
+        group = 'Reporting'
 
-tasks.register('allureGenerate', Exec) {
-    dependsOn test
-    description = 'Generate Allure report'
-    group = 'Reporting'
+        commandLine 'cmd', '/c', 'allure', 'generate',
+                "$buildDir/allure-results",
+                '-o', "$buildDir/reports/allure-report",
+                '--clean'
+    }
 
-    commandLine 'cmd', '/c', 'allure', 'generate',
-            "$buildDir/allure-results",
-            '-o', "$buildDir/reports/allure-report",
-            '--clean'
-}
+    tasks.register('openReport') {
+        dependsOn allureGenerate
+        description = 'Open Allure report in browser'
+        group = 'Reporting'
 
-tasks.register('openReport') {
-    dependsOn allureGenerate
-    description = 'Open Allure report in browser'
-    group = 'Reporting'
-
-    doLast {
-        def reportFile = file("$buildDir/reports/allure-report/index.html")
-        if (reportFile.exists()) {
-            java.awt.Desktop.desktop.browse reportFile.toURI()
-            println "Report opened: $reportFile"
-        } else {
-            println "Report not found at: $reportFile"
-            println "Run './gradlew test allureGenerate' first"
+        doLast {
+            def reportFile = file("$buildDir/reports/allure-report/index.html")
+            if (reportFile.exists()) {
+                java.awt.Desktop.desktop.browse reportFile.toURI()
+                println "Report opened: $reportFile"
+            } else {
+                println "Report not found at: $reportFile"
+                println "Run './gradlew test allureGenerate' first"
+            }
         }
     }
-}
 
 // ✅ Добавьте эту задачу, которая работает без установки Allure CLI:
-tasks.register('testAndOpenReport') {
-    dependsOn test, openReport
-    description = 'Run tests and open Allure report'
-    group = 'Verification'
+    tasks.register('testAndOpenReport') {
+        dependsOn test, openReport
+        description = 'Run tests and open Allure report'
+        group = 'Verification'
+    }
 }

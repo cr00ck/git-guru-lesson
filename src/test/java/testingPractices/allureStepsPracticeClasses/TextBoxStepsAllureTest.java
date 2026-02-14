@@ -1,4 +1,4 @@
-package testingPractices.allureStepsPracticeKlasses;
+package testingPractices.allureStepsPracticeClasses;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.*;
 import io.qameta.allure.selenide.AllureSelenide;
@@ -8,6 +8,11 @@ import org.junit.jupiter.api.Test;
 import pageObg.BaseConfigsDemoqa;
 import pageObg.TextBoxPage;
 
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Selenide.open;
+
+import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selenide.$;
 import static dataFaker.DataFakerRamdom.*;
 import static io.qameta.allure.Allure.step;
 
@@ -23,6 +28,7 @@ public class TextBoxStepsAllureTest extends BaseConfigsDemoqa {
 
 
     @Test
+    @Tag("ALLURE")
     @Feature("Тренировка QAA с формой для ввода")
     @Story("Отработка навыков по автотестам")
     @Owner("vysokikh-mm")
@@ -30,16 +36,25 @@ public class TextBoxStepsAllureTest extends BaseConfigsDemoqa {
     @Link(value = "demoqa.com", url = "https://demoqa.com/text-box")
     @DisplayName("Заполнение полей на форме textBox")
 
+//    @AfterEach
+//    void addAttachments () {
+//        Attach.screenshotAs("Last screenShot"); // делаем скрин после теста в алюре
+//
+//    }
+
 
     void textBoxFormLambdaTest() { //  такой подход используется если степы не переиспользуются
         SelenideLogger.addListener("allure", new AllureSelenide()); // чтобы видеть шаги и скрины в allure
 
-        TextBoxPage textbopage = new TextBoxPage();
+        TextBoxAllureStepsPage textbopage = new TextBoxAllureStepsPage();
         // Установки для теста
-        BaseConfigsDemoqa.setUp();
+       // BaseConfigsDemoqa.setUp();
         // Шаги и в allure будет по сценарию
         step("Отрываем главную страницу", () -> {
-                textbopage.openPage();
+                open("https://demoqa.com");
+        });
+        step("Переходим к разделу Text Box", () -> {
+            textbopage.openPageNew();
         });
         step("Вводим полное имя", () -> {
             textbopage.setFullName(fullName);
@@ -80,7 +95,7 @@ public class TextBoxStepsAllureTest extends BaseConfigsDemoqa {
 
     }
     @Test
-    @Tag("SEARCH")
+    @Tag("ALLURE")
     void textBoxFormAnnotatedTest() { //  такой подход используется если степы !! переиспользуются !!
         // и уже в самой странице TextBoxAllureStepsPage с методами пишем стэпы
         SelenideLogger.addListener("allure", new AllureSelenide());
@@ -93,8 +108,9 @@ public class TextBoxStepsAllureTest extends BaseConfigsDemoqa {
         // объявляем класс
         TextBoxAllureStepsPage textbopage = new TextBoxAllureStepsPage();
         // Установки для теста
-        BaseConfigsDemoqa.setUp();
-        textbopage.openPage()
+        //BaseConfigsDemoqa.setUp();
+        open("https://demoqa.com");
+        textbopage.openPageNew()
                 .setFullName(fullName)
                 .setEmail(email)
                 .setCurrentAddress(currentAddress)

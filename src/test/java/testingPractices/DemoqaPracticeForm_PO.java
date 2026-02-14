@@ -37,16 +37,16 @@ public class DemoqaPracticeForm_PO extends BaseConfigsDemoqa {
                 .clickSubmit()
                 // Ждем появления модального окна
 
-                .assertModalTable("Student Name", "Kirill Skotings")
-                .assertModalTable("Student Email", "ggg@mail.ru")
-                .assertModalTable("Gender", "Male")
-                .assertModalTable("Mobile", "1234567890")
+                .assertModalTable("Student Name", firstNameFaker + " " + lastNameFaker)
+                .assertModalTable("Student Email", emailFaker)
+                .assertModalTable("Gender", getRandomGender())
+                .assertModalTable("Mobile", phoneFaker)
                 .assertModalTable("Date of Birth", "17 July,1999")
                 .assertModalTable("Subjects", "Biology")
-                .assertModalTable("Hobbies", "Reading")
+                .assertModalTable("Hobbies", getRandomHobbyFromArray())
                 .assertModalTable("Picture", "img/Medal Star (1).png")
-                .assertModalTable("Address", "Current Address")
-                .assertModalTable("State and City", "Haryana Panipat");
+                .assertModalTable("Address", addressFaker)
+                .assertModalTable("State and City", stateFaker + " " + getRandomCityDependsOnState(stateFaker));
 
     }
 }

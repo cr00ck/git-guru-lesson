@@ -5,6 +5,8 @@ import com.codeborne.selenide.Configuration;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
 
+import java.io.File;
+
 import static com.codeborne.selenide.Selenide.*;
 
 @DisplayName("Первые учебные тесты")
@@ -17,10 +19,10 @@ public class SearchTests {
         //Configuration.timeout = 10000;
         //Configuration.pageLoadTimeout = 30000; // Увеличиваем таймаут загрузки
         Configuration.browserSize = "1920x1080";
-        Configuration.headless = true;
+        Configuration.headless = false;
 
         // Настройки для стабильности
-        Configuration.pageLoadStrategy = "eager";
+        Configuration.pageLoadStrategy = "normal";
         Configuration.holdBrowserOpen = false;
 
 //        Configuration.browserCapabilities.setCapability("goog:chromeOptions", java.util.Map.of(
@@ -28,20 +30,20 @@ public class SearchTests {
 //                "useAutomationExtension", false
        // ));
     }
-    @Disabled("тут надо писать тикет бага в ТМС, тест будет виден как неактивный")
+    //@Disabled("тут надо писать тикет бага в ТМС, тест будет виден как неактивный")
     @Test
-    @Tags({
-            @Tag("HTML"),
-            @Tag("SEARCH"),
-            @Tag("PRACTICE")
-    })
+//    @Tags({
+//            @Tag("HTML"),
+//            @Tag("SEARCH"),
+//            @Tag("PRACTICE")
+//    })
     @DisplayName("Тест со созданной страницей HTML из файла")
 
     //на тестах с гугл всегда появлялась капча и тест падал, дипсик предложил создать файл в проекте
     //с html страницей и на ней запустить, все сработало.
     void successfulSearchTest() {
         // Открываем локальный HTML файл
-        open("file://" + System.getProperty("user.dir") + "src/test/resources/htmlPages/test-page.html");
+        open("file://" + System.getProperty("user.dir") + File.separator +"src/test/resources/htmlPages/test-page.html");
 
         // Проверяем заголовок
         $("h3").shouldHave(Condition.text("Selenide"));
@@ -57,7 +59,7 @@ public class SearchTests {
         System.out.println("Тест успешно выполнен!");
     }
     @Test
-    @Tag("SEARCH")
+   // @Tag("SEARCH")
 
     void testDuckDuckGo() {
         open("https://duckduckgo.com/");
