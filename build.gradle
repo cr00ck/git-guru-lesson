@@ -53,7 +53,30 @@ dependencies {
 }
 
 // создает уникальную папку для каждого запуска allure
-def allureResultsDir = "build/allure-results/" + new Date().format('yyyy-MM-dd_HH-mm-ss')
+// В build.gradle оставьте фиксированный путь для Jenkins
+def allureResultsDir = "build/allure-results" // фиксированный путь для Jenkins
+def archiveDir = "build/allure-results-archive/" + new Date().format('yyyy-MM-dd_HH-mm-ss')
+
+
+// ⚠️ ВАЖНО: Определяем задачу archiveAllureResults ДО ее использования
+task archiveAllureResults {
+    doLast {
+        def sourceDir = file("$buildDir/allure-results")
+        if (sourceDir.exists()) {
+            def targetDir = file(archiveDir)
+            // Создаем директорию назначения
+            targetDir.mkdirs()
+            // Копируем файлы
+            copy {
+                from sourceDir
+                into targetDir
+            }
+            println "Allure results archived to: ${targetDir.absolutePath}"
+        } else {
+            println "Source directory $sourceDir does not exist, nothing to archive"
+        }
+    }
+}
 
 tasks.withType(Test) {
     useJUnitPlatform()
@@ -81,6 +104,8 @@ tasks.withType(Test) {
             //exeptionFormat "short"
         }
     }
+    // ✅ После тестов архивируем результаты
+    finalizedBy archiveAllureResults
 }
 // типы тасков по тэгам
 task simple_test(type: Test) {
@@ -122,62 +147,64 @@ task simple_test(type: Test) {
 //    }
 //}
 
+
 // ✅ ИСПРАВЛЕННЫЕ ЗАДАЧИ:
-    tasks.register('serveAllure', Exec) {
-        dependsOn test
-        description = 'Serve Allure report'
-        group = 'Reporting'
+// Задачи для Allure отчета
+tasks.register('serveAllure', Exec) {
+    dependsOn test
+    description = 'Serve Allure report'
+    group = 'Reporting'
 
-        doFirst {
-            println "Allure results directory: $buildDir/allure-results"
-            println "Note: Allure CLI must be installed on your system!"
-            println "Install with: scoop install allure"
-        }
-
-        commandLine 'cmd', '/c', 'allure', 'serve', "$buildDir/allure-results"
+    doFirst {
+        println "Allure results directory: $buildDir/allure-results"
+        println "Note: Allure CLI must be installed on your system!"
+        println "Install with: scoop install allure"
     }
 
-    tasks.register('allureGenerate', Exec) { // в консоли ./gradlew cleanAllureResults
-        dependsOn test
-        description = 'Generate Allure report'
-        group = 'Reporting'
-
-        commandLine 'cmd', '/c', 'allure', 'generate',
-                "$buildDir/allure-results",
-                '-o', "$buildDir/reports/allure-report",
-                '--clean'
-    }
-
-    tasks.register('openReport') {
-        dependsOn allureGenerate
-        description = 'Open Allure report in browser'
-        group = 'Reporting'
-
-        doLast {
-            def reportFile = file("$buildDir/reports/allure-report/index.html")
-            if (reportFile.exists()) {
-                java.awt.Desktop.desktop.browse reportFile.toURI()
-                println "Report opened: $reportFile"
-            } else {
-                println "Report not found at: $reportFile"
-                println "Run './gradlew test allureGenerate' first"
-            }
-        }
-    }
-
-// ✅ Добавьте эту задачу, которая работает без установки Allure CLI:
-    tasks.register('testAndOpenReport') {
-        dependsOn test, openReport
-        description = 'Run tests and open Allure report'
-        group = 'Verification'
+    commandLine 'cmd', '/c', 'allure', 'serve', "$buildDir/allure-results"
 }
+
+tasks.register('allureGenerate', Exec) {
+    dependsOn test
+    description = 'Generate Allure report'
+    group = 'Reporting'
+
+    commandLine 'cmd', '/c', 'allure', 'generate',
+            "$buildDir/allure-results",
+            '-o', "$buildDir/reports/allure-report",
+            '--clean'
+}
+
+tasks.register('openReport') {
+    dependsOn allureGenerate
+    description = 'Open Allure report in browser'
+    group = 'Reporting'
+
+    doLast {
+        def reportFile = file("$buildDir/reports/allure-report/index.html")
+        if (reportFile.exists()) {
+            java.awt.Desktop.desktop.browse reportFile.toURI()
+            println "Report opened: $reportFile"
+        } else {
+            println "Report not found at: $reportFile"
+            println "Run './gradlew test allureGenerate' first"
+        }
+    }
+}
+
+tasks.register('testAndOpenReport') {
+    dependsOn test, openReport
+    description = 'Run tests and open Allure report'
+    group = 'Verification'
+}
+
 task cleanAllureResults(type: Delete) {
     delete "$buildDir/allure-results"
     delete "$buildDir/reports/allure-report"
-    description = "Очищает папки allure-results и allure-report"
+    delete "$buildDir/allure-results-archive"
+    description = "Очищает папки allure-results, allure-report и архивы"
 }
 
-// Если хотите, чтобы clean также удалял allure результаты
 clean {
     dependsOn cleanAllureResults
 }
