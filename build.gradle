@@ -198,7 +198,7 @@ tasks.register('testAndOpenReport') {
     group = 'Verification'
 }
 
-task cleanAllureResults(type: Delete) {
+task cleanAllureResults(type: Delete) { // очистка папки с результатами ./gradlew cleanAllureResults
     delete "$buildDir/allure-results"
     delete "$buildDir/reports/allure-report"
     delete "$buildDir/allure-results-archive"

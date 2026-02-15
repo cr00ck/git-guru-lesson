@@ -1,5 +1,6 @@
 package testingPractices.allureStepsPracticeClasses;
 
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 
@@ -53,7 +54,8 @@ public class TextBoxAllureStepsPage {
     }
     @Step("Клик на сабмит")
     public TextBoxAllureStepsPage clickSubmit() {
-        submitButton.click();
+        submitButton.scrollTo();
+        Selenide.executeJavaScript("arguments[0].click();", submitButton);
         return this;
     }
     @Step("Проверки в таблице по пунктам {value}")

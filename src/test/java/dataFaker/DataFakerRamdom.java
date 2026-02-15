@@ -9,7 +9,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public  class DataFakerRamdom {
 
-    public static Faker faker = new Faker(Locale.of("en-US"));
+    public static Faker faker = new Faker(new Locale("en", "US"));
 
     public static String fullNameFaker = faker.name().fullName(),
     // Было (одно значение на всю жизнь класса), а если вынести это в метод,
