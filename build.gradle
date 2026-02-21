@@ -78,24 +78,22 @@ task archiveAllureResults {
     }
 }
 
-tasks.withType(Test) {
+tasks.withType(Test) { // чтобы запускался junit 5 , а так по дефолту 4
     useJUnitPlatform()
 
     // Настройки кодировки - добавьте их здесь
     systemProperty "file.encoding", "utf-8"
     systemProperty "console.encoding", "utf-8"
 
-    systemProperties = [
-            'selenide.browser': 'chrome',
-            'selenide.headless': 'true',  // ← ВАЖНО: true для Jenkins!
-            //'selenide.headless': 'false',
-            'allure.results.directory': allureResultsDir, // создает уникальную папку для каждого запуска allure
+    systemProperties.putAll(System.getProperties()) // дает нам менять значение переменных. В консоле: ./gradlew allure_test -Dbrowser=opera
+
+    systemProperties.putAll([
+                    'selenide.browser': System.getProperty('browser', 'chrome'), // берем из -D или chrome по умолчанию
+                    'selenide.browserSize': System.getProperty('screen.size', '1920x1080'), // берем из -D или 1920x1080 по умолчанию            'selenide.headless': 'true',  // ← ВАЖНО: true для Jenkins!
+                    'selenide.headless': System.getProperty('headless', 'true'), // для Jenkins по умолчанию true
+                    'allure.results.directory': allureResultsDir, // создает уникальную папку для каждого запуска allure
             'allure.report.directory': "$buildDir/reports/allure-report"
-    ]
-    jvmArgs = [
-            '-Dwebdriver.chrome.driver=/usr/bin/chromedriver', // если нужно
-            '-Dselenide.headless=true'
-    ]
+    ])
 
 
     testLogging {

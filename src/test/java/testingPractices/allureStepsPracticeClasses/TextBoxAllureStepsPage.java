@@ -55,7 +55,7 @@ public class TextBoxAllureStepsPage {
     @Step("Клик на сабмит")
     public TextBoxAllureStepsPage clickSubmit() {
         submitButton.scrollTo();
-        Selenide.executeJavaScript("arguments[0].click();", submitButton);
+        Selenide.executeJavaScript("arguments[0].click();", submitButton); // убираем рекламный баннер
         return this;
     }
     @Step("Проверки в таблице по пунктам {value}")
