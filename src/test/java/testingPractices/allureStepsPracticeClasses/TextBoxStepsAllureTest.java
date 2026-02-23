@@ -11,10 +11,9 @@ import pageObg.BaseConfigsDemoqa;
 import pageObg.TextBoxPage;
 
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selenide.open;
 
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.*;
 import static dataFaker.DataFakerRamdom.*;
 import static io.qameta.allure.Allure.step;
 
@@ -23,6 +22,10 @@ public class TextBoxStepsAllureTest extends BaseConfigsDemoqa {
     // ctrl+shift+L жмем после кажного готового теста, чтобы оптимизировать и удалить все лишнее
     @AfterEach
     void addAttachments() {
+        System.out.println("=== VIDEO DEBUG ===");
+        System.out.println("Session ID: " + sessionId());
+        System.out.println("Video URL: " + Attach.getVideoUrl());
+
         // Прикрепляем скриншот
         Attach.screenshotAs("Last screenshot");
         // Прикрепляем page source
