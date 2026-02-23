@@ -22,9 +22,26 @@ public class TextBoxStepsAllureTest extends BaseConfigsDemoqa {
     // ctrl+shift+L жмем после кажного готового теста, чтобы оптимизировать и удалить все лишнее
     @AfterEach
     void addAttachments() {
+        // Даем время на сохранение видео
+        try {
+            Thread.sleep(3000); // 3 секунды
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         System.out.println("=== VIDEO DEBUG ===");
-        System.out.println("Session ID: " + sessionId());
-        System.out.println("Video URL: " + Attach.getVideoUrl());
+        String videoUrl = Attach.getVideoUrl();
+        System.out.println("Video URL: " + videoUrl);
+
+        // Проверим доступность видео через HTTP
+        try {
+            java.net.HttpURLConnection connection = (java.net.HttpURLConnection)
+                    new java.net.URL(videoUrl).openConnection();
+            connection.setRequestMethod("HEAD");
+            int responseCode = connection.getResponseCode();
+            System.out.println("Video HTTP response: " + responseCode);
+        } catch (Exception e) {
+            System.out.println("Video check failed: " + e.getMessage());
+        }
 
         // Прикрепляем скриншот
         Attach.screenshotAs("Last screenshot");
