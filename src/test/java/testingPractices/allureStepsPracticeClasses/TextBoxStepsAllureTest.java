@@ -111,14 +111,14 @@ public class TextBoxStepsAllureTest extends BaseConfigsDemoqa {
     @Test
     @Tag("ALLURE")
     void textBoxFormAnnotatedTest() { //  такой подход используется если степы !! переиспользуются !!
-        // и уже в самой странице TextBoxAllureStepsPage с методами пишем стэпы
-        SelenideLogger.addListener("allure", new AllureSelenide());
-        // аннотации в алюре
+        // аннотации в алюре (Программные ) аннотации выполняются, но могут быть "затерты" или не успеть примениться до начала шагов!
         Allure.feature("Тренировка QAA с формой для ввода");
         Allure.story("Отработка навыков по автотестам");
         Allure.label("owner", "vysokikh-mm");
         Allure.label("severity", SeverityLevel.CRITICAL.value());
         Allure.link("demoqa.com", "https://demoqa.com/text-box");
+        // и уже в самой странице TextBoxAllureStepsPage с методами пишем стэпы
+        SelenideLogger.addListener("allure", new AllureSelenide());
         // объявляем класс
         TextBoxAllureStepsPage textbopage = new TextBoxAllureStepsPage();
         // Установки для теста
