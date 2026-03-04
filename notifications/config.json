@@ -6,14 +6,14 @@
     "comment": "messssssageee @MrCr00ck",
     "reportLink": "https://api.telegram.org/bot8267065339:AAGSRKXAQZ5OL4No0Zq8v0xCMEEJs9l5Dd8/getUpdates",
     "language": "en",
-    "allureFolder": "allure-report",
+    "allureFolder": "C:\\\\Users\\\\vysokikh-mm\\\\IdeaProjects\\\\git-guru-lesson\\\\allure-report",
     "enableChart": true,
     "enableSuitesPublishing": false,
     "customData": {}
   },
   "telegram": {
     "token": "8267065339:AAGSRKXAQZ5OL4No0Zq8v0xCMEEJs9l5Dd8",
-    "chat": "662611493",
+    "chat": "-1003831131405",
     "topic": "",
     "replyTo": "",
     "templatePath": "/templates/telegram.ftl"

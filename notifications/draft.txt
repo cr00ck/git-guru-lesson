@@ -8,7 +8,9 @@
 
   curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "662611493", "text": "This is a test from curl", "disable_notification": true}' https://api.telegram.org/bot8267065339:AAGSRKXAQZ5OL4No0Zq8v0xCMEEJs9l5Dd8/sendMessage
 
-  что бы из powerShell сработало, отправить сообщение, надо вот так :
+  что бы из powerShell сработало, отправить сообщение
+  Личные чаты: положительные числа (662611493), надо вот так  :
+
 $body = @{
   chat_id = "662611493"
   text = "Ты уже поела гречку ?"
@@ -18,4 +20,13 @@ $body = @{
 Invoke-RestMethod -Uri "https://api.telegram.org/bot8267065339:AAGSRKXAQZ5OL4No0Zq8v0xCMEEJs9l5Dd8/sendMessage" -Method Post -ContentType "application/json" -Body $body
 
  а это уже с алюр отчетом запуск :
- java "-DconfigFile=notifications/config.json" -jar notifications/allure-notifications-4.11.0.jar
+ java "-DconfigFile=notifications/config.json" -jar notifications/allure-notifications-4.5.0.jar
+
+Каналы и группы: отрицательные числа (-1003831131405), надо вот так  :
+ $body = @{
+   chat_id = "-1003831131405"
+   text = "Are you awake baby =) ?"
+   disable_notification = $true
+ } | ConvertTo-Json
+
+ Invoke-RestMethod -Uri "https://api.telegram.org/bot8267065339:AAGSRKXAQZ5OL4No0Zq8v0xCMEEJs9l5Dd8/sendMessage" -Method Post -ContentType "application/json" -Body $body

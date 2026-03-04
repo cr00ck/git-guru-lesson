@@ -91,6 +91,7 @@ tasks.withType(Test) { // чтобы запускался junit 5 , а так п
                     'selenide.browser': System.getProperty('browser', 'chrome'), // берем из -D или chrome по умолчанию
                     'selenide.browserSize': System.getProperty('screen.size', '1920x1080'), // берем из -D или 1920x1080 по умолчанию            'selenide.headless': 'true',  // ← ВАЖНО: true для Jenkins!
                     'selenide.headless': System.getProperty('headless', 'true'), // для Jenkins по умолчанию true
+                    'selenoid': System.getProperty('selenoid', 'selenoid.autotests.cloud'),
                     'allure.results.directory': allureResultsDir, // создает уникальную папку для каждого запуска allure
             'allure.report.directory': "$buildDir/reports/allure-report"
     ])
