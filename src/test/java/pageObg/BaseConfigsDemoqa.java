@@ -6,7 +6,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.BeforeAll;
 
-public class BaseConfigsDemoqa  extends BaseConfigs{
+public class  BaseConfigsDemoqa  extends BaseConfigs{
     @BeforeAll
     public static void setUp() {
 
@@ -44,6 +44,14 @@ public class BaseConfigsDemoqa  extends BaseConfigs{
          * Позволяет запускать тесты на разных браузерах параллельно
          */
         String remote = System.getProperty("selenide.remote", "https://user1:1234@selenoid.autotests.cloud/wd/hub");
+
+        /**
+         * URL удаленного сервера Selenoid для запуска тестов в контейнерах
+         * Формат: https://логин:пароль@адрес:порт/wd/hub
+         * Позволяет запускать тесты на разных браузерах параллельно
+         */
+
+
 
         // ========== 2. НАСТРОЙКА УДАЛЕННОГО ЗАПУСКА ==========
 

@@ -30,6 +30,7 @@ public class SystemProperyiesSetGet {
         String screenSize = System.getProperty("screen.size", "1920x1080");
         System.out.println("Selenide screen size: " + screenSize);
     }
+//
 
     // Этот метод ТОЛЬКО для демонстрации установки значения
 //    @Test

@@ -29,7 +29,7 @@ public class TextBoxStepsAllureTest extends BaseConfigsDemoqa {
             e.printStackTrace();
         }
         System.out.println("=== VIDEO DEBUG ===");
-        String videoUrl = Attach.getVideoUrl();
+        String videoUrl = String.valueOf(Attach.getVideoUrl());
         System.out.println("Video URL: " + videoUrl);
 
         // Проверим доступность видео через HTTP
