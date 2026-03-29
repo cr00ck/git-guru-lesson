@@ -1,4 +1,4 @@
-package testingPractices;
+package testingPractices.firstTestsWithSelenide;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;

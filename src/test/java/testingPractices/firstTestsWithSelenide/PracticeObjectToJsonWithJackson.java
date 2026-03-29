@@ -1,17 +1,13 @@
-package testingPractices;
+package testingPractices.firstTestsWithSelenide;
 
 import JsonModelClasses.DataForJsonCompilingThroughJackson;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.google.gson.JsonObject;
-import org.assertj.core.api.Assert;
 import org.junit.jupiter.api.Test;
 
 import java.io.InputStream;
 import java.util.Arrays;
-import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 

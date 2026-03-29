@@ -1,9 +1,8 @@
-package testingPractices;
+package testingPractices.firstTestsWithSelenide;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -19,14 +18,11 @@ import static com.codeborne.selenide.WebDriverConditions.url;
 public class GithubHoverTest {
     @BeforeAll
     static void setUp() {
-
-        // СИСТЕМНЫЙ ChromeDriver
-        System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
-
         // Минимальные настройки
         Configuration.browserSize = "1920x1080";
-        Configuration.headless = true;
+        Configuration.headless = false;
         Configuration.timeout = 15000;
+        Configuration.pageLoadStrategy = "eager";
 
         // Отключаем все, что может мешать
         Configuration.browser = "chrome";
@@ -42,13 +38,12 @@ public class GithubHoverTest {
         // ctrl+shift+L жмем после кажного готового теста, чтобы оптимизировать и удалить все лишнее
 
 
-        //На главной странице GitHub выберите: Меню -> Solutions -> Enterprize (с помощью команды hover для Solutions).
+        // На главной странице GitHub выберите: Menu -> Solutions -> Enterprise.
         open("https://github.com");
-        $$("ul li").findBy(text("Enterprise")).hover();
-        $("a[href='/enterprise']").shouldBe(Condition.visible).click();
+        $$("button, a, summary").findBy(text("Solutions")).hover();
+        $$("a").findBy(text("Enterprise")).shouldBe(Condition.visible).click();
 
-        //Убедитесь, что загрузилась нужная страница (например, что заголовок: "The AI-powered developer platform.").
-        $("#hero-section-brand-heading").shouldHave(text("The AI-powered developer platform for the agent-ready enterprise"));
+        // Проверяем факт перехода на Enterprise-страницу (контент у GitHub часто A/B и меняется).
         webdriver().shouldHave(url("https://github.com/enterprise"));
         // sleep(5000);
     }

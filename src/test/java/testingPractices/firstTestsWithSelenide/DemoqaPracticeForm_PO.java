@@ -1,4 +1,4 @@
-package testingPractices;
+package testingPractices.firstTestsWithSelenide;
 
 import org.junit.jupiter.api.Test;
 import pageObg.BaseConfigsDemoqa;

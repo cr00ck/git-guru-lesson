@@ -1,4 +1,4 @@
-package testingPractices;
+package testingPractices.firstTestsWithSelenide;
 
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;

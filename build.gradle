@@ -49,6 +49,8 @@ dependencies {
     testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.10.0'
     testImplementation 'org.assertj:assertj-core:3.25.3'
     testImplementation 'net.javacrumbs.json-unit:json-unit-assertj:3.2.2'
+    testImplementation 'io.appium:java-client:10.0.0'
+
 
     // Обновленная версия REST Assured (совместима с Java 17)
     testImplementation 'io.rest-assured:rest-assured:5.3.0'
