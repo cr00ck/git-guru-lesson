@@ -1,6 +1,6 @@
 plugins {
-    id 'java'
-    id 'io.qameta.allure' version "2.11.2"
+id 'java-library'
+id 'io.qameta.allure' version "2.11.2"
 }
 
 group = 'org.example'
@@ -31,16 +31,24 @@ repositories {
     mavenCentral()
 }
 
+def aspectjWeaverVersion = "1.9.22",
+    selenideVersion = "6.13.0",
+    restAssuredVersion = "5.3.0",
+    allureVersion = "2.21.0",
+    junitVersion = "5.9.3",
+    slf4jVersion = "2.0.7"
+
 dependencies {
-    testImplementation 'io.qameta.allure:allure-junit5:2.24.0'
-    testImplementation 'io.qameta.allure:allure-selenide:2.24.0'
+    testImplementation "io.qameta.allure:allure-junit5:${allureVersion}"
+    testImplementation "io.qameta.allure:allure-selenide:${allureVersion}"
 
     testImplementation 'io.github.bonigarcia:webdrivermanager:5.6.3'
     testImplementation 'net.datafaker:datafaker:2.5.2'
-    testImplementation 'com.codeborne:selenide:7.0.4'
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
-    testImplementation 'org.slf4j:slf4j-simple:2.0.9'
-    testImplementation 'org.seleniumhq.selenium:selenium-java:4.39.0'
+    // 6.x регистрирует SelenideNettyClientFactory (SPI) → ломается с Selenium 4.14+ без Netty; 7.x переключился на JdkHttpClient (см. META-INF в selenide-core).
+    testImplementation 'com.codeborne:selenide:7.15.1'
+    testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
+    testImplementation "org.slf4j:slf4j-simple:${slf4jVersion}"
+    // Selenide pulls a compatible Selenium version; pinning selenium-java to 4.39 broke RemoteWebDriver (missing Netty HTTP client on classpath — see NettyClient$Factory).
     testImplementation 'commons-io:commons-io:2.21.0'
     testImplementation 'com.codeborne:pdf-test:1.8.1'
     testImplementation 'com.codeborne:xls-test:1.4.3'
@@ -53,11 +61,11 @@ dependencies {
 
 
     // Обновленная версия REST Assured (совместима с Java 17)
-    testImplementation 'io.rest-assured:rest-assured:5.3.0'
-    testImplementation 'io.rest-assured:json-path:5.3.0'
-    testImplementation 'io.rest-assured:xml-path:5.3.0'
-    testImplementation 'io.rest-assured:json-schema-validator:5.3.0'
-    testImplementation 'io.qameta.allure:allure-rest-assured:2.24.0'
+    testImplementation "io.rest-assured:rest-assured:${restAssuredVersion}"
+    testImplementation "io.rest-assured:json-path:${restAssuredVersion}"
+    testImplementation "io.rest-assured:xml-path:${restAssuredVersion}"
+    testImplementation "io.rest-assured:json-schema-validator:${restAssuredVersion}"
+    testImplementation "io.qameta.allure:allure-rest-assured:${allureVersion}"
 
 
     // JAXB зависимости для Java 17
@@ -105,6 +113,8 @@ tasks.withType(Test) { // чтобы запускался junit 5 , а так п
                     'selenide.browser': System.getProperty('browser', 'chrome'), // берем из -D или chrome по умолчанию
                     'selenide.browserSize': System.getProperty('screen.size', '1920x1080'), // берем из -D или 1920x1080 по умолчанию            'selenide.headless': 'true',  // ← ВАЖНО: true для Jenkins!
                     'selenide.headless': System.getProperty('headless', 'true'), // для Jenkins по умолчанию true
+                    // Selenium 4.14+: avoid Netty HttpClient SPI (missing NettyClient$Factory when mixing Selenide + Appium dependency graphs)
+                    'webdriver.http.factory': System.getProperty('webdriver.http.factory', 'jdk-http-client'),
                     'selenoid': System.getProperty('selenoid', 'selenoid.autotests.cloud'),
                     'allure.results.directory': allureResultsDir, // создает уникальную папку для каждого запуска allure
             'allure.report.directory': "$buildDir/reports/allure-report"

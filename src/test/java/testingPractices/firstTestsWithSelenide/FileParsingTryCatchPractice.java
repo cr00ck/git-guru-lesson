@@ -73,7 +73,7 @@ public class FileParsingTryCatchPractice extends BaseConfigs {
 
         }
     @Test
-    void xlsParsingTest()  {
+    void xlsParsingTest() throws FileNotFoundException {
         open("https://excelvba.ru/programmes/Teachers");
         File downloaded = $("[href='https://ExcelVBA.ru/sites/default/files/teachers.xls']").download();// скачиваем файл
         XLS xls = new XLS(downloaded);

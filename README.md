@@ -45,6 +45,50 @@ gradle clean test -Dselenoid_url="selenoid.autotests.cloud/wd/hub" -Dbrowser_siz
 
 When executing this command in the IDE terminal, tests will run remotely in `Selenoid`.
 
+### BrowserStack credentials (safe setup)
+
+Do not store BrowserStack credentials in source code. Use environment variables:
+
+- `BROWSERSTACK_USERNAME`
+- `BROWSERSTACK_ACCESS_KEY`
+- `BROWSERSTACK_APP` — id приложения в BrowserStack (например `bs://...`), без него мобильная сессия не стартует
+
+PowerShell (persist for current user):
+
+```powershell
+[Environment]::SetEnvironmentVariable("BROWSERSTACK_USERNAME","your_user","User")
+[Environment]::SetEnvironmentVariable("BROWSERSTACK_ACCESS_KEY","your_access_key","User")
+```
+
+PowerShell (set now + persist, with verification):
+
+```powershell
+# подставь реальные значения
+$bsUser = "YOUR_BROWSERSTACK_USERNAME"
+$bsKey  = "YOUR_BROWSERSTACK_ACCESS_KEY"
+
+# 1) установить на уровне пользователя (сохранится между перезапусками)
+[Environment]::SetEnvironmentVariable("BROWSERSTACK_USERNAME", $bsUser, "User")
+[Environment]::SetEnvironmentVariable("BROWSERSTACK_ACCESS_KEY", $bsKey, "User")
+
+# 2) сразу же установить в текущую сессию
+$env:BROWSERSTACK_USERNAME  = $bsUser
+$env:BROWSERSTACK_ACCESS_KEY = $bsKey
+
+# 3) проверить
+"USERNAME = $env:BROWSERSTACK_USERNAME"
+"ACCESS_KEY_SET = $([string]::IsNullOrWhiteSpace($env:BROWSERSTACK_ACCESS_KEY) -eq $false)"
+```
+
+Restart terminal/IDE after setting variables.
+
+Quick check:
+
+```powershell
+echo $env:BROWSERSTACK_USERNAME
+echo $env:BROWSERSTACK_ACCESS_KEY
+```
+
 ## <img width="4%" style="vertical-align:baseline" title="Jenkins" src="src/test/resources/img/logo/Jenkins.svg" > Jenkins Build
 
 To start the build, navigate to the <code>Build with Parameters</code> section and click the `Build` button.
