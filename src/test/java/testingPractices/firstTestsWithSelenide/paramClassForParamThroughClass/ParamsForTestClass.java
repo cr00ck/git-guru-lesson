@@ -1,5 +1,7 @@
 package testingPractices.firstTestsWithSelenide.paramClassForParamThroughClass;
 
+
+
 public class ParamsForTestClass {
     private String name;
     private String email;

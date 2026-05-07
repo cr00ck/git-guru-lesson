@@ -11,6 +11,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.opencsv.CSVReader;
+import helpers.OwnerProperty;
+import lombok.SneakyThrows;
+import org.aeonbits.owner.ConfigFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import pageObg.BaseConfigs;
@@ -30,6 +33,8 @@ public class FileParsingTryCatchPractice extends BaseConfigs {
     private Gson gson = new Gson(); // объявляем чтобы парсить json, тест ниже jsonParsingTest()
 
     @Test
+    @SneakyThrows // это аннотация из ламбока, с ее помощью можно не писать никакие exceptions
+
     void downloadFileTest() throws IOException {
         open("https://plus34.ru/novosti/fnp-i-pot-v-vorde");
         File downloaded =
@@ -73,7 +78,8 @@ public class FileParsingTryCatchPractice extends BaseConfigs {
 
         }
     @Test
-    void xlsParsingTest() throws FileNotFoundException {
+    @SneakyThrows // это аннотация из ламбока, с ее помощью можно не писать никакие exceptions
+    void xlsParsingTest()  {
         open("https://excelvba.ru/programmes/Teachers");
         File downloaded = $("[href='https://ExcelVBA.ru/sites/default/files/teachers.xls']").download();// скачиваем файл
         XLS xls = new XLS(downloaded);
@@ -81,6 +87,7 @@ public class FileParsingTryCatchPractice extends BaseConfigs {
 
     }
     @Test
+    @SneakyThrows // это аннотация из ламбока, с ее помощью можно не писать никакие exceptions
     void csvParsingTest() throws Exception  {
        //ставим библеотеку  'com.opencsv:opencsv:5.12.0' для работы с CSV
         try (InputStream is = cl.getResourceAsStream("testData/textBoxForm.csv");// чтобы прочитать csv надо создать объект в классе private ClassLoader cl
@@ -105,6 +112,7 @@ public class FileParsingTryCatchPractice extends BaseConfigs {
     }
 
     @Test
+    @SneakyThrows // это аннотация из ламбока, с ее помощью можно не писать никакие exceptions
     void checkImagesInPasringZip() throws Exception {
         try (ZipInputStream zis = new ZipInputStream(
                 cl.getResourceAsStream("zipFiles/ЛКК.zip"))) {// чтобы прочитать csv надо создать объект в классе private ClassLoader cl
@@ -133,6 +141,8 @@ public class FileParsingTryCatchPractice extends BaseConfigs {
         }
     }
     @Test
+    @SneakyThrows // это аннотация из ламбока, с ее помощью можно не писать никакие exceptions
+
     void glossaryJsonParsingTest() throws Exception { // 2 библеотеки для парсинга популярные gson и jсson
         try (Reader reader = new InputStreamReader(
                 cl.getResourceAsStream("json/glossary.json")
@@ -179,27 +189,38 @@ public class FileParsingTryCatchPractice extends BaseConfigs {
         }
         }
         @Test
+        @SneakyThrows // это аннотация из ламбока, с ее помощью можно не писать никакие exceptions
+
         void additionalInfoJsonParsingTest() throws Exception { // 2 библеотеки для парсинга популярные gson и jсson
-           try(Reader reader= new InputStreamReader(
-                   cl.getResourceAsStream("json/additional_info.json")
-           )) {
-               AdditionalInfo actual = gson.fromJson(reader, AdditionalInfo.class);// меняем JsonObject на созданный класс AdditionalInfo
-              // JsonObject document = actual.get("document").getAsJsonObject(); // это становится не нужным, тк есть класс
+            try (Reader reader = new InputStreamReader(
+                    cl.getResourceAsStream("json/additional_info.json")
+            )) {
+                AdditionalInfo actual = gson.fromJson(reader, AdditionalInfo.class);// меняем JsonObject на созданный класс AdditionalInfo
+                // JsonObject document = actual.get("document").getAsJsonObject(); // это становится не нужным, тк есть класс
 
-               Assertions.assertEquals("ТЕСТ сведения о квалификации CR00CK", actual.getAdditional_info());
-               Assertions.assertEquals(123456, actual.getDocument().getRepoLink());
-               Assertions.assertEquals("https://lk-files.ranepa.ru/public/lf75cb98ce33a6c2e3327df16269ad8f45384af38a03afa247202fb534e7a3530c8ac7a50746a5df8273e558aff652b844f36d1c00d6494b4a5067ab9cca999d0"
-                       ,actual.getDocument().getUrl());
-               Assertions.assertEquals(1,actual.getClientVersion());
-               Assertions.assertEquals("hr/candidate/profile/additional",actual.getBitrix());
+                Assertions.assertEquals("ТЕСТ сведения о квалификации CR00CK", actual.getAdditional_info());
+                Assertions.assertEquals(123456, actual.getDocument().getRepoLink());
+                Assertions.assertEquals("https://lk-files.ranepa.ru/public/lf75cb98ce33a6c2e3327df16269ad8f45384af38a03afa247202fb534e7a3530c8ac7a50746a5df8273e558aff652b844f36d1c00d6494b4a5067ab9cca999d0"
+                        , actual.getDocument().getUrl());
+                Assertions.assertEquals(1, actual.getClientVersion());
+                Assertions.assertEquals("hr/candidate/profile/additional", actual.getBitrix());
 
-               System.out.println("Все проверки JSON успешно пройдены!");
-           }
+                System.out.println("Все проверки JSON успешно пройдены!");
+            }
+            ;
+        }
+@Test
+public void ownerReadingTest(){
+    OwnerProperty owPro = ConfigFactory.create(OwnerProperty.class); // у библ owner есть класс,и в нем метод create , в нем реализуем класс
+    System.out.println(owPro.url());
+    System.out.println(owPro.login()); // выводится в нужном классе , где надо проперти
 
-    }
+    };
+
+};
 
 
-    }
+
 
 
 

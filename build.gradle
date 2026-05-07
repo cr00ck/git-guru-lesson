@@ -58,6 +58,14 @@ dependencies {
     testImplementation 'org.assertj:assertj-core:3.25.3'
     testImplementation 'net.javacrumbs.json-unit:json-unit-assertj:3.2.2'
     testImplementation 'io.appium:java-client:10.0.0'
+    testImplementation 'org.aeonbits.owner:owner:1.0.12'
+
+
+    // Правильная конфигурация Lombok
+    compileOnly 'org.projectlombok:lombok:1.18.34'
+    annotationProcessor 'org.projectlombok:lombok:1.18.34'
+    testCompileOnly 'org.projectlombok:lombok:1.18.34'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.34'
 
 
     // Обновленная версия REST Assured (совместима с Java 17)
@@ -231,4 +239,3 @@ task cleanAllureResults(type: Delete) { // очистка папки с резу
 clean {
     dependsOn cleanAllureResults
 }
-
