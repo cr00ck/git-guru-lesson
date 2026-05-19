@@ -50,19 +50,13 @@ static Random random= new Random();
 
         public static Dogs createRandomDog() { // заполнение собаки
                 int rand = random.nextInt(3);
-                switch (rand) {
-                    case 0 -> {
-                        return new Volf();
-                    }
-                    case 1 -> {
-                        return  new Cayot();
-                    }
-                    case 2 -> {
-                        return new HomeDog();
-                    }
-                }
-            return new HomeDog();
-        }
+                return switch (rand) {
+                    case 0 -> new Volf();
+                    case 1 -> new Cayot();
+                    case 2 -> new HomeDog();
+                    default -> new HomeDog();
+                };
+            }
         public static void addDogs(int numberDogs){ //метод по количеству собак заполняет их в список
             for (int i = 0; i < numberDogs; i++) {
             dogs.add(createRandomDog());

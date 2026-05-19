@@ -26,7 +26,7 @@ public class TextBoxTest  extends BaseConfigsDemoqa {
         TextBoxPage textbopage = new TextBoxPage();
         // Установки для теста
         BaseConfigsDemoqa.setUp();
-textbopage.openPage()
+        textbopage.openPage()
         .setFullName(fullName)
         .setEmail(email)
         .setCurrentAddress(currentAddress)

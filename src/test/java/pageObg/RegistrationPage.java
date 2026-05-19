@@ -10,16 +10,6 @@ import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
-import com.codeborne.selenide.SelenideElement;
-import pages.components.CalendarComponent;
-
-import java.io.File;
-
-import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
-
 public class RegistrationPage {
     public static SelenideElement firstNameLocator = $("#firstName"),
             lastNameLocator = $("#lastName"),
@@ -52,28 +42,20 @@ public class RegistrationPage {
         return this;
     }
 
-    ;
-
     public RegistrationPage setLastName(String lastName) {
         lastNameLocator.shouldBe(visible).setValue(lastName);
         return this;
     }
-
-    ;
 
     public RegistrationPage setUserEmail(String email) {
         emailLocator.shouldBe(visible).setValue(email);
         return this;
     }
 
-    ;
-
     public RegistrationPage setGender(String gender) {
         genderLocator.shouldBe(visible).click();
         return this;
     }
-
-    ;
 
     public RegistrationPage setNumber(String number) {
         numberLocator.shouldBe(visible).setValue(number);
@@ -135,7 +117,7 @@ public class RegistrationPage {
 
     public RegistrationPage setCity(String city_Panipat) {
         cityInput.setValue(city_Panipat).pressEnter();
-        ; //so-so
+        //so-so
         $("#city").shouldHave(text(city_Panipat));
 //      $("#city").$(byText("Panipat")).click(); // good
 
