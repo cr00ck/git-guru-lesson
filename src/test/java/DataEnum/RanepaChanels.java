@@ -3,7 +3,7 @@ package DataEnum;
 public enum RanepaChanels {
         VK("https://vk.com/ranepaabitura", "vk", "ВКонтакте"),
     TELEGRAM("https://t.me/ranepa_regions", "telegram", "Telegram"),
-    RUUTUBE("https://rutube.ru/channel/23832470/", "rutube", "Rutube");
+    RUTUBE("https://rutube.ru/channel/23812270/", "rutube", "Rutube");
 
         public final String url;
         public final String dataAttribute;

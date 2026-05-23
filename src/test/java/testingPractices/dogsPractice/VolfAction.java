@@ -1,25 +1,29 @@
 package testingPractices.dogsPractice;
 
-import java.util.Random;
-
 /**
  * Класс, который создаёт волка, выводит его характеристики
  * и выполняет его случайное действие.
  */
 public class VolfAction {
-    private static final Random random = new Random();
+    private final VolfRandomizer randomizer;
+
+    public VolfAction() {
+        this(new RandomVolfRandomizer());
+    }
+
+    public VolfAction(VolfRandomizer randomizer) {
+        this.randomizer = randomizer;
+    }
 
     /**
      * Создаёт волка и возвращает его.
      */
-    public static Volf createVolf() {
+    public Volf createVolf() {
         Volf volf = new Volf();
-        // Устанавливаем случайные характеристики
-        String[] colors = {"White", "Grey", "Black", "Brown"};
-        String[] tails = {"Long", "Short", "Curly", "Straight"};
-        volf.setColor(colors[random.nextInt(colors.length)]);
-        volf.setTail(tails[random.nextInt(tails.length)]);
-        volf.setBreed("Grey"); // волки всегда серой породы
+        // Устанавливаем случайные характеристики через рандомизер
+        volf.setColor(randomizer.randomColor());
+        volf.setTail(randomizer.randomTail());
+        volf.setBreed(randomizer.randomBreed());
         return volf;
     }
 
@@ -46,8 +50,10 @@ public class VolfAction {
      * Главный метод: создаёт волка, выводит инфо и выполняет действие.
      */
     public static void main(String[] args) {
+        VolfAction action = new VolfAction();
+
         // Создаём волка
-        Volf volf = createVolf();
+        Volf volf = action.createVolf();
 
         // Выводим информацию о волке
         printVolfInfo(volf);
