@@ -1,35 +1,37 @@
 pipeline {
     agent any
 
-    environment {
-        GRAIL = 'gradle'
+    tools {
+        gradle 'Gradle-8.6'
     }
 
     stages {
-        stage('Checkout') {
+        stage('Setup') {
             steps {
-                checkout scm
-                echo 'Код успешно загружен'
+                sh 'echo "=== Проверка окружения ==="'
+                sh 'java -version'
+                sh 'gradle --version'
+                sh 'rm -rf .gradle build || true'
             }
         }
-
+        
         stage('Build') {
             steps {
-                sh './gradlew build -x test'
+                sh 'gradle build -x test --no-daemon'
             }
         }
 
         stage('Run Tests') {
             steps {
-                sh './gradlew test'
+                sh 'gradle test --no-daemon -Dselenide.remote=http://selenium-chromium:4444/wd/hub'
             }
         }
 
         stage('Allure Report') {
             steps {
-                sh './gradlew cleanAllureResults'
-                sh './gradlew allure_test'
-                sh './gradlew archiveAllureResults'
+                sh 'gradle cleanAllureResults --no-daemon || true'
+                sh 'gradle allure_test --no-daemon || true'
+                sh 'gradle archiveAllureResults --no-daemon || true'
             }
         }
 

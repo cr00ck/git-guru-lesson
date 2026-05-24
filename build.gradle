@@ -118,16 +118,14 @@ tasks.withType(Test) { // чтобы запускался junit 5 , а так п
     systemProperties.putAll(System.getProperties()) // дает нам менять значение переменных. В консоле: ./gradlew allure_test -Dbrowser=opera
 
     systemProperties.putAll([
-                    'selenide.browser': System.getProperty('browser', 'chrome'), // берем из -D или chrome по умолчанию
-                    'selenide.browserSize': System.getProperty('screen.size', '1920x1080'), // берем из -D или 1920x1080 по умолчанию            'selenide.headless': 'true',  // ← ВАЖНО: true для Jenkins!
-                    'selenide.headless': System.getProperty('headless', 'true'), // для Jenkins по умолчанию true
-                    // Selenium 4.14+: avoid Netty HttpClient SPI (missing NettyClient$Factory when mixing Selenide + Appium dependency graphs)
-                    'webdriver.http.factory': System.getProperty('webdriver.http.factory', 'jdk-http-client'),
-                    'selenoid': System.getProperty('selenoid', 'selenoid.autotests.cloud'),
-                    'allure.results.directory': allureResultsDir, // создает уникальную папку для каждого запуска allure
+            'selenide.browser': System.getProperty('browser', 'chrome'),
+            'selenide.browserSize': System.getProperty('screen.size', '1920x1080'),
+            'selenide.headless': System.getProperty('headless', 'true'),
+            'selenide.remote': System.getProperty('selenide.remote', 'http://localhost:4444/wd/hub'),  // ← Локальный Selenoid
+            'webdriver.http.factory': System.getProperty('webdriver.http.factory', 'jdk-http-client'),
+            'allure.results.directory': allureResultsDir,
             'allure.report.directory': "$buildDir/reports/allure-report"
     ])
-
 
     testLogging {
         lifecycle {

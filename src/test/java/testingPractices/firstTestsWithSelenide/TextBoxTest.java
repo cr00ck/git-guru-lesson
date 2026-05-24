@@ -9,7 +9,7 @@ import pageObg.TextBoxPage;
 import static dataFaker.DataFakerRamdom.*;
 
 
-public class TextBoxTest  extends BaseConfigsDemoqa {
+public class TextBoxTest  {//extends BaseConfigsDemoqa {
     // ctrl+shift+L жмем после кажного готового теста, чтобы оптимизировать и удалить все лишнее
 
     // используем кастомные методы для генерации данных

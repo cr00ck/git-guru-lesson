@@ -3,65 +3,20 @@ package pageObg;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.openqa.selenium.chrome.ChromeDriverService;
-import org.openqa.selenium.chrome.ChromeOptions;
-
-import java.io.File;
-
-import static com.codeborne.selenide.Selenide.closeWebDriver;
 
 public class BaseConfigs {
-    @BeforeAll
-    public static void setUp() {
-        // КРИТИЧЕСКИ ВАЖНО: Указываем путь к системному ChromeDriver
-        System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
-
-        // ОТКЛЮЧАЕМ WebDriverManager полностью
-        System.setProperty("wdm.progressBar", "false");
-        System.setProperty("wdm.targetPath", "/dev/null");
-        System.setProperty("wdm.chromeDriverVersion", "LATEST");
-        System.setProperty("wdm.architecture", "64");
-
-        // Отключаем автоматическую загрузку
-        System.setProperty("wdm.downloadFolder", "/tmp");
-        System.setProperty("wdm.cachePath", "/tmp");
-
-        // Настройки Selenide
+    static {
+        // Настройки для удалённого Selenium-сервера
+        Configuration.remote = System.getProperty("selenide.remote", "http://localhost:4444/wd/hub");
+        Configuration.browser = System.getProperty("selenide.browser", "chrome");
         Configuration.browserSize = "1920x1080";
-        Configuration.browser = "chrome";
-        Configuration.pageLoadStrategy = "eager";
-        Configuration.screenshots = false;
-        Configuration.savePageSource = false;
-        Configuration.headless = true;
+        Configuration.headless = Boolean.parseBoolean(System.getProperty("selenide.headless", "true")); //true - без графического интерфейса
         Configuration.timeout = 10000;
-        Configuration.downloadsFolder = "build/downloads";
-        Configuration.reopenBrowserOnFail = false;
+        Configuration.pageLoadStrategy = "eager";// "eager" - Selenide не ждёт загрузки всех стилей и картинок,а продолжает выполнение, как только загружен основной HTML и DOM.
+        Configuration.screenshots = false;// Установлено в 'false', потому что мы делегируем создание скриншотов и видео самому Allure и Selenoid.
+        Configuration.savePageSource = false;// Установлено в 'false' Allure справляется с этой задачей лучше.
 
-        // Устанавливаем ChromeService вручную
-        ChromeDriverService service = ChromeDriverService.createDefaultService();
-        System.out.println("ChromeDriver service created: " + service.getUrl());
-
-        // Настройки ChromeOptions для Jenkins
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless=new");
-        options.addArguments("--no-sandbox");
-        options.addArguments("--disable-dev-shm-usage");
-        options.addArguments("--disable-gpu");
-        options.addArguments("--window-size=1920,1080");
-        options.addArguments("--remote-allow-origins=*");
-        options.addArguments("--disable-blink-features=AutomationControlled");
-
-        // Дополнительные опции для стабильности
-        options.addArguments("--disable-extensions");
-        options.addArguments("--disable-software-rasterizer");
-        options.addArguments("--disable-features=VizDisplayCompositor");
-        options.addArguments("--disable-features=NetworkService");
-
-        Configuration.browserCapabilities = options;
-
-        // Подключаем Allure listener
+        // Allure listener
         SelenideLogger.addListener("AllureSelenide",
                 new AllureSelenide()
                         .screenshots(true)
@@ -69,15 +24,18 @@ public class BaseConfigs {
                         .includeSelenideSteps(true)
         );
 
-        System.out.println("=== CONFIGURATION ===");
-        System.out.println("webdriver.chrome.driver: " + System.getProperty("webdriver.chrome.driver"));
-        System.out.println("ChromeDriver exists: " + new File("/usr/local/bin/chromedriver").exists());
-        System.out.println("ChromeDriver executable: " + new File("/usr/local/bin/chromedriver").canExecute());
+        System.out.println("=== Test Configuration ===");
+        System.out.println("Remote URL: " + Configuration.remote);
+        System.out.println("Browser: " + Configuration.browser);
+        System.out.println("Headless: " + Configuration.headless);
+        System.out.println("=========================");
     }
-
-    @AfterAll
-    static void tearDown() {
-        closeWebDriver();
-        SelenideLogger.removeListener("AllureSelenide");
+    // Некоторые старые тесты в проекте могут вызывать BaseConfigs.setUp().
+    // Этот метод ничего не делает, но предотвращает ошибки компиляции.
+    // Все нужные настройки уже выполнены в статическом блоке выше.
+    // Пустой метод для обратной совместимости
+    public static void setUp() {
+        // Настройки уже выполнены в статическом блоке
+        System.out.println("setUp() called - configuration already initialized");
     }
 }

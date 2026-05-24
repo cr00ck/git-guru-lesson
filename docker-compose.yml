@@ -6,9 +6,15 @@ services:
       - "8080:8080"
       - "50000:50000"
     volumes:
-      - jenkins_home:/var/jenkins_home      # ← ЭТА СТРОКА БЫЛА ПРОПУЩЕНА!
+      - jenkins_home:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
+    networks:
+      - selenoid_net
 
 volumes:
   jenkins_home:
+
+networks:
+  selenoid_net:
+    external: true
