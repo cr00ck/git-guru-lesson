@@ -37,7 +37,7 @@ public class TextBoxAllureStepsPage {
         fullNameLocator.shouldBe(visible).setValue(name);
         return this;
     }
-    @Step("Вводим емайл {name}")
+    @Step("Вводим Email {name}")
     public TextBoxAllureStepsPage setEmail(String name) {
         emailLocator.shouldBe(visible).setValue(name);
         return this;

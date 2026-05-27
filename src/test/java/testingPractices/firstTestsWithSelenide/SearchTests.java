@@ -58,6 +58,7 @@ public class SearchTests {
 
         System.out.println("Тест успешно выполнен!");
     }
+    @Disabled("DuckDuckGo блокирует автоматизированные браузеры")
     @Test
    // @Tag("SEARCH")
 

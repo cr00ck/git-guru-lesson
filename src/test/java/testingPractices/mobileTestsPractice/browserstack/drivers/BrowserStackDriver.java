@@ -17,46 +17,30 @@ import java.util.Map;
  * App Automate (mobile): use {@code bstack:options} — Selenium 4.x rejects legacy top-level keys
  * ({@code app}, {@code browserstack.user}, {@code device}, …) as non-W3C.
  * Hub must be App Automate: {@code https://hub-cloud.browserstack.com/wd/hub} (not {@code hub.browserstack.com}).
+ *
+ * Credentials берутся из переменных окружения:
+ *   BROWSERSTACK_USERNAME, BROWSERSTACK_ACCESS_KEY, BROWSERSTACK_APP
+ * или JVM properties:
+ *   -Dbrowserstack.user=... -Dbrowserstack.key=... -Dbrowserstack.app=...
  */
 public class BrowserStackDriver implements WebDriverProvider {
 
     private static final String DEFAULT_HUB = "https://hub-cloud.browserstack.com/wd/hub";
 
-    // ========== ХАРДКОД ПЕРЕМЕННЫХ ==========
-    // ЗАМЕНИТЕ НА РЕАЛЬНЫЕ ЗНАЧЕНИЯ ИЗ BROWSERSTACK
-    private static final String HARDCODED_USERNAME = "bsuser_n0F7wd";
-    private static final String HARDCODED_ACCESS_KEY = "r1HMtt1PpRwTRx7b2mnk";
-    private static final String HARDCODED_APP = "bs://8aaf4eaf3a28246552065105dcf6a2d74367d524";
-    // =========================================
-
     @Nonnull
     @Override
     public WebDriver createDriver(@Nonnull Capabilities capabilities) {
-        // Сначала пробуем взять из переменных окружения / JVM свойств
         String userName = getenvOrProperty("BROWSERSTACK_USERNAME", "browserstack.user");
         String accessKey = getenvOrProperty("BROWSERSTACK_ACCESS_KEY", "browserstack.key");
         String app = getenvOrProperty("BROWSERSTACK_APP", "browserstack.app");
 
-        // Если переменные окружения не заданы — используем хардкод
-        if (isBlank(userName)) {
-            userName = HARDCODED_USERNAME;
-            System.out.println("⚠️ Using hardcoded BROWSERSTACK_USERNAME: " + userName);
-        }
-        if (isBlank(accessKey)) {
-            accessKey = HARDCODED_ACCESS_KEY;
-            System.out.println("⚠️ Using hardcoded BROWSERSTACK_ACCESS_KEY");
-        }
-        if (isBlank(app)) {
-            app = HARDCODED_APP;
-            System.out.println("⚠️ Using hardcoded BROWSERSTACK_APP: " + app);
-        }
-
-        // Финальная проверка
         if (isBlank(userName) || isBlank(accessKey) || isBlank(app)) {
             throw new IllegalStateException(
-                    "❌ Не удалось получить credentials! Установите переменные окружения:\n" +
-                    "   BROWSERSTACK_USERNAME, BROWSERSTACK_ACCESS_KEY, BROWSERSTACK_APP (bs://...)\n" +
-                    "   или заполните HARDCODED_* в классе BrowserStackDriver.");
+                    "❌ Не удалось получить credentials! Установите переменные окружения:\\n" +
+                    "   BROWSERSTACK_USERNAME, BROWSERSTACK_ACCESS_KEY, BROWSERSTACK_APP (bs://...)\\n" +
+                    "   Например: export BROWSERSTACK_USERNAME=your_user\\n" +
+                    "             export BROWSERSTACK_ACCESS_KEY=your_key\\n" +
+                    "             export BROWSERSTACK_APP=bs://...");
         }
 
         Map<String, Object> bstackOptions = new HashMap<>();

@@ -1,5 +1,6 @@
 package testingPractices.allureStepsPracticeClasses;
 
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import helpers.Attach;
 import io.qameta.allure.*;
@@ -10,7 +11,6 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import pageObg.BaseConfigs;
 
-import static com.codeborne.selenide.Selenide.*;
 import static dataFaker.DataFakerRamdom.*;
 import static io.qameta.allure.Allure.step;
 
@@ -38,19 +38,46 @@ public class TextBoxStepsAllureTest extends BaseConfigs {
     @Link(value = "demoqa.com", url = "https://demoqa.com/text-box")
     @DisplayName("Заполнение полей на форме textBox")
     void textBoxFormAnnotatedTest() {
-        SelenideLogger.addListener("allure", new AllureSelenide());
-        
-        open("https://demoqa.com/text-box");
-        
-        $("#userName").setValue(fullName);
-        $("#userEmail").setValue(email);
-        $("#currentAddress").setValue(currentAddress);
-        $("#permanentAddress").setValue(permanentAddress);
-        $("#submit").click();
-        
-        $("#output").shouldHave(com.codeborne.selenide.Condition.text(fullName));
-        $("#output").shouldHave(com.codeborne.selenide.Condition.text(email));
-        $("#output").shouldHave(com.codeborne.selenide.Condition.text(currentAddress));
-        $("#output").shouldHave(com.codeborne.selenide.Condition.text(permanentAddress));
+        TextBoxAllureStepsPage textBoxPage = new TextBoxAllureStepsPage();
+
+        step("Открываем страницу Text Box", () -> {
+            Selenide.open("https://demoqa.com/text-box");
+        });
+
+        step("Вводим полное имя", () -> {
+            textBoxPage.setFullName(fullName);
+        });
+
+        step("Вводим Email", () -> {
+            textBoxPage.setEmail(email);
+        });
+
+        step("Вводим постоянный адрес", () -> {
+            textBoxPage.setCurrentAddress(currentAddress);
+        });
+
+        step("Вводим временный адрес", () -> {
+            textBoxPage.setPermanentAddress(permanentAddress);
+        });
+
+        step("Клик на Submit", () -> {
+            textBoxPage.clickSubmit();
+        });
+
+        step("Проверяем полное имя", () -> {
+            textBoxPage.assertInsideTable(fullName);
+        });
+
+        step("Проверяем Email", () -> {
+            textBoxPage.assertInsideTable(email);
+        });
+
+        step("Проверяем постоянный адрес", () -> {
+            textBoxPage.assertInsideTable(currentAddress);
+        });
+
+        step("Проверяем временный адрес", () -> {
+            textBoxPage.assertInsideTable(permanentAddress);
+        });
     }
 }

@@ -22,8 +22,8 @@ public class RanepaApiPractice {
     private static String accessToken;      // ← сохраняем токен
     private static String refreshToken;     // ← сохраняем refresh токен
     private static final String BASE_URL = "https://t11.ranepa.ru";
-    private static final String USERNAME = "aandreev-21-02";  // ваш логин
-    private static final String PASSWORD = "Zw27o543";        // ваш пароль
+    private static final String USERNAME = System.getProperty("ranepa.login", System.getenv("RANEPA_LOGIN"));
+    private static final String PASSWORD = System.getProperty("ranepa.password", System.getenv("RANEPA_PASSWORD"));
 
 
     @BeforeAll  // ← ВАЖНО: выполняется 1 раз перед ВСЕМИ тестами

@@ -13,8 +13,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class SpecForLKST11Auth {
 
     public static final String BASE_URL = "https://t11.ranepa.ru";
-    private static final String USERNAME = "aandreev-21-02";
-    private static final String PASSWORD = "Zw27o543";
+    private static final String USERNAME = System.getProperty("ranepa.login", System.getenv("RANEPA_LOGIN"));
+    private static final String PASSWORD = System.getProperty("ranepa.password", System.getenv("RANEPA_PASSWORD"));
 
     private static String accessToken;
     private static boolean isLoggedIn = false;

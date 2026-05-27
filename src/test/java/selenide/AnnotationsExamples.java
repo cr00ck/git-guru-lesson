@@ -12,7 +12,7 @@ import static dataFaker.DataFakerRamdom.getRandomAddress;
 public class AnnotationsExamples  extends BaseConfigsDemoqa {
 
 
-        // ctrl+shift+L жмем после кажного готового теста, чтобы оптимизировать и удалить все лишнее
+        // ctrl+shift+L жмем после каждого готового теста, чтобы оптимизировать и удалить все лишнее
 
         // используем кастомные методы для генерации данных
         String fullName = getFullName();

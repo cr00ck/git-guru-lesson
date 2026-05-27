@@ -13,6 +13,9 @@ build/
 # Временные файлы Gradle
 .gradletasknamecache
 
+# Environment variables (с реальными данными)
+.env
+
 # Общие для всех OS
 .DS_Store
 Thumbs.db

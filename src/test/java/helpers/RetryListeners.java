@@ -32,10 +32,13 @@ public class RetryListeners implements TestExecutionExceptionHandler, AfterTestE
     public void handleTestExecutionException(ExtensionContext extensionContext, Throwable throwable) throws Throwable {
         for (int i = 0; i < MAX_RETRIES; i++) {
             try {
-                extensionContext.getRequiredTestMethod().invoke(extensionContext.getRequiredTestInstance()); // получить и выполнить метод
-                return; // остановить метод если выполнилось
+                extensionContext.getRequiredTestMethod().invoke(extensionContext.getRequiredTestInstance());
+                return; // тест прошёл — не пробрасываем исключение
             } catch (Throwable ex) {
-                throw throwable;
+                System.out.println("⚠️ Retry #" + (i + 1) + " failed, " + (MAX_RETRIES - i - 1) + " attempts left");
+                if (i == MAX_RETRIES - 1) {
+                    throw ex; // последняя попытка тоже упала — пробрасываем
+                }
             }
         }
     }

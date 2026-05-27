@@ -21,7 +21,7 @@ public class Snippets {
 //    void textBoxForm() { // после названия теста пишем:
 //        SelenideLogger.addListener("allure", new AllureSelenide()); // чтобы видеть шаги и скрины в allure
 
-    // ctrl+shift+L жмем после кажного готового теста, чтобы оптимизировать и удалить все лишнее
+    // ctrl+shift+L жмем после каждого готового теста, чтобы оптимизировать и удалить все лишнее
 
 //    // this is not a full list, just the most common
 //

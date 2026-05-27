@@ -1,23 +1,23 @@
 
 
 "telegram": {
-    "token": "...",         //8267065339:AAGSRKXAQZ5OL4No0Zq8v0xCMEEJs9l5Dd8
-    "chat": "...",          //662611493
+    "token": "...",         //${TELEGRAM_BOT_TOKEN}
+    "chat": "...",          //${TELEGRAM_CHAT_ID}
     "replyTo": ""
   }
 
-  curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "662611493", "text": "This is a test from curl", "disable_notification": true}' https://api.telegram.org/bot8267065339:AAGSRKXAQZ5OL4No0Zq8v0xCMEEJs9l5Dd8/sendMessage
+  curl -X POST -H 'Content-Type: application/json' -d '{"chat_id": "${TELEGRAM_CHAT_ID}", "text": "This is a test from curl", "disable_notification": true}' https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage
 
   что бы из powerShell сработало, отправить сообщение
-  Личные чаты: положительные числа (662611493), надо вот так  :
+  Личные чаты: положительные числа (${TELEGRAM_CHAT_ID}), надо вот так  :
 
 $body = @{
-  chat_id = "662611493"
+  chat_id = "${TELEGRAM_CHAT_ID}"
   text = "Ты уже поела гречку ?"
   disable_notification = $true
 } | ConvertTo-Json
 
-Invoke-RestMethod -Uri "https://api.telegram.org/bot8267065339:AAGSRKXAQZ5OL4No0Zq8v0xCMEEJs9l5Dd8/sendMessage" -Method Post -ContentType "application/json" -Body $body
+Invoke-RestMethod -Uri "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" -Method Post -ContentType "application/json" -Body $body
 
  а это уже с алюр отчетом запуск :
  java "-DconfigFile=notifications/config.json" -jar notifications/allure-notifications-4.5.0.jar
@@ -29,4 +29,4 @@ Invoke-RestMethod -Uri "https://api.telegram.org/bot8267065339:AAGSRKXAQZ5OL4No0
    disable_notification = $true
  } | ConvertTo-Json
 
- Invoke-RestMethod -Uri "https://api.telegram.org/bot8267065339:AAGSRKXAQZ5OL4No0Zq8v0xCMEEJs9l5Dd8/sendMessage" -Method Post -ContentType "application/json" -Body $body
+ Invoke-RestMethod -Uri "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" -Method Post -ContentType "application/json" -Body $body

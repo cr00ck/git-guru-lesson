@@ -1,53 +1,10 @@
-services:
-  selenoid:
-    image: aerokube/selenoid:latest
-    container_name: selenoid
-    ports:
-      - "4444:4444"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./selenoid/config:/etc/selenoid:ro
-      - ./selenoid/video:/opt/selenoid/video
-      - ./selenoid/logs:/opt/selenoid/logs
-    # Переменная DOCKER_API_VERSION удалена для совместимости с новой версией Docker
-    command:
-      [
-        "-conf", "/etc/selenoid/browsers.json",
-        "-video-output-dir", "/opt/selenoid/video",
-        "-log-output-dir", "/opt/selenoid/logs",
-        "-limit", "5",
-        "-session-attempt-timeout", "2m",
-        "-service-startup-timeout", "2m",
-        "-timeout", "10m"
-      ]
-    restart: unless-stopped
-    networks:
-      - selenoid_net
-
-  selenoid-ui:
-    image: aerokube/selenoid-ui:latest
-    container_name: selenoid-ui
-    ports:
-      - "8081:8080"
-    command: ["--selenoid-uri", "http://selenoid:4444"]
-    depends_on:
-      - selenoid
-    restart: unless-stopped
-    networks:
-      - selenoid_net
-
-  video-recorder:
-    image: selenoid/video-recorder:latest-release
-    container_name: video-recorder
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./selenoid/video:/opt/selenoid/video
-    environment:
-      - OVERRIDE_VIDEO_OUTPUT_DIR=/opt/selenoid/video
-    restart: unless-stopped
-    networks:
-      - selenoid_net
-
-networks:
-  selenoid_net:
-  # Убрано external: true, чтобы Docker создал сеть автоматически
+# ⚠️ Этот файл объединён с docker-compose.yml
+#
+# Все сервисы (Jenkins + Selenoid + UI + video-recorder)
+# теперь находятся в одном файле docker-compose.yml.
+#
+# Запуск:
+#   docker compose up -d
+#
+# Или только Selenoid (если Jenkins не нужен):
+#   docker compose up -d selenoid selenoid-ui video-recorder

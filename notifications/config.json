@@ -4,7 +4,7 @@
     "project": "First Allure Bot Chart",
     "environment": "",
     "comment": "messssssageee @MrCr00ck",
-    "reportLink": "https://api.telegram.org/bot8267065339:AAGSRKXAQZ5OL4No0Zq8v0xCMEEJs9l5Dd8/getUpdates",
+    "reportLink": "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getUpdates",
     "language": "en",
     "allureFolder": "C:\\\\Users\\\\vysokikh-mm\\\\IdeaProjects\\\\git-guru-lesson\\\\allure-report",
     "enableChart": true,
@@ -12,8 +12,8 @@
     "customData": {}
   },
   "telegram": {
-    "token": "8267065339:AAGSRKXAQZ5OL4No0Zq8v0xCMEEJs9l5Dd8",
-    "chat": "-1003831131405",
+    "token": "${TELEGRAM_BOT_TOKEN}",
+    "chat": "${TELEGRAM_CHAT_ID}",
     "topic": "",
     "replyTo": "",
     "templatePath": "/templates/telegram.ftl"

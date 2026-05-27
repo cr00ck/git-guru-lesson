@@ -34,7 +34,7 @@ repositories {
 def aspectjWeaverVersion = "1.9.22",
     selenideVersion = "6.13.0",
     restAssuredVersion = "5.3.0",
-    allureVersion = "2.21.0",
+    allureVersion = "2.24.0",
     junitVersion = "5.9.3",
     slf4jVersion = "2.0.7"
 
@@ -49,12 +49,12 @@ dependencies {
     testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
     testImplementation "org.slf4j:slf4j-simple:${slf4jVersion}"
     // Selenide pulls a compatible Selenium version; pinning selenium-java to 4.39 broke RemoteWebDriver (missing Netty HTTP client on classpath — see NettyClient$Factory).
-    testImplementation 'commons-io:commons-io:2.21.0'
+    testImplementation 'commons-io:commons-io:2.16.1'
     testImplementation 'com.codeborne:pdf-test:1.8.1'
     testImplementation 'com.codeborne:xls-test:1.4.3'
     testImplementation 'com.opencsv:opencsv:5.12.0'
     testImplementation 'com.google.code.gson:gson:2.10.1'
-    testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.10.0'
+    testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.17.2'
     testImplementation 'org.assertj:assertj-core:3.25.3'
     testImplementation 'net.javacrumbs.json-unit:json-unit-assertj:3.2.2'
     testImplementation 'io.appium:java-client:10.0.0'
@@ -120,8 +120,8 @@ tasks.withType(Test) { // чтобы запускался junit 5 , а так п
     systemProperties.putAll([
             'selenide.browser': System.getProperty('browser', 'chrome'),
             'selenide.browserSize': System.getProperty('screen.size', '1920x1080'),
-            'selenide.headless': System.getProperty('headless', 'true'),
-            'selenide.remote': System.getProperty('selenide.remote', 'http://localhost:4444/wd/hub'),  // ← Локальный Selenoid
+            'selenide.headless': System.getProperty('selenide.headless', 'false'),  // ← ГИБКО
+            'selenide.remote': System.getProperty('selenide.remote', 'http://localhost:4444/wd/hub'),
             'webdriver.http.factory': System.getProperty('webdriver.http.factory', 'jdk-http-client'),
             'allure.results.directory': allureResultsDir,
             'allure.report.directory': "$buildDir/reports/allure-report"

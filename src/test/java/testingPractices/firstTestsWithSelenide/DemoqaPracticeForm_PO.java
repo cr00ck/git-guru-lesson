@@ -4,12 +4,10 @@ import org.junit.jupiter.api.Test;
 import pageObg.BaseConfigsDemoqa;
 import pageObg.RegistrationPage;
 
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
 import static dataFaker.DataFakerRamdom.*;
 
 public class DemoqaPracticeForm_PO extends BaseConfigsDemoqa {
-    // ctrl+shift+L жмем после кажного готового теста, чтобы оптимизировать и удалить все лишнее
+    // ctrl+shift+L жмем после каждого готового теста, чтобы оптимизировать и удалить все лишнее
 
 
     @Test

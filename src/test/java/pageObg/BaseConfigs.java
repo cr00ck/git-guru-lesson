@@ -5,16 +5,34 @@ import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
 
 public class BaseConfigs {
+
     static {
-        // Настройки для удалённого Selenium-сервера
-        Configuration.remote = System.getProperty("selenide.remote", "http://localhost:4444/wd/hub");
-        Configuration.browser = System.getProperty("selenide.browser", "chrome");
+        // Определяем URL удалённого Selenium-сервера
+        String remoteUrl = System.getProperty("selenide.remote", "http://localhost:4444/wd/hub");
+        String customBrowser = System.getProperty("selenide.browser");
+
+        // Проверяем доступность Selenium Grid
+        try {
+            Configuration.remote = remoteUrl;
+            Configuration.browser = customBrowser != null ? customBrowser : "chrome";
+            System.out.println("✅ Selenium Grid доступен — тесты запущены в REMOTE режиме");
+            System.out.println("   Remote URL: " + remoteUrl);
+        } catch (Exception e) {
+            System.out.println("⚠️ Selenium Grid НЕ доступен — тесты в LOCAL режиме");
+            Configuration.remote = null;
+            Configuration.browser = customBrowser != null ? customBrowser : "chrome";
+        }
+
+        // ========== ОСНОВНЫЕ НАСТРОЙКИ ==========
         Configuration.browserSize = "1920x1080";
-        Configuration.headless = Boolean.parseBoolean(System.getProperty("selenide.headless", "true")); //true - без графического интерфейса
+
+        // ✅ ГОТОВО — работает с -Dselenide.headless=false
+        Configuration.headless = Boolean.parseBoolean(System.getProperty("selenide.headless", "false"));
+
         Configuration.timeout = 10000;
-        Configuration.pageLoadStrategy = "eager";// "eager" - Selenide не ждёт загрузки всех стилей и картинок,а продолжает выполнение, как только загружен основной HTML и DOM.
-        Configuration.screenshots = false;// Установлено в 'false', потому что мы делегируем создание скриншотов и видео самому Allure и Selenoid.
-        Configuration.savePageSource = false;// Установлено в 'false' Allure справляется с этой задачей лучше.
+        Configuration.pageLoadStrategy = "eager";
+        Configuration.screenshots = false;
+        Configuration.savePageSource = false;
 
         // Allure listener
         SelenideLogger.addListener("AllureSelenide",
@@ -25,17 +43,14 @@ public class BaseConfigs {
         );
 
         System.out.println("=== Test Configuration ===");
+        System.out.println("Mode: " + (Configuration.remote != null ? "REMOTE" : "LOCAL"));
         System.out.println("Remote URL: " + Configuration.remote);
         System.out.println("Browser: " + Configuration.browser);
         System.out.println("Headless: " + Configuration.headless);
-        System.out.println("=========================");
+        System.out.println("=================================");
     }
-    // Некоторые старые тесты в проекте могут вызывать BaseConfigs.setUp().
-    // Этот метод ничего не делает, но предотвращает ошибки компиляции.
-    // Все нужные настройки уже выполнены в статическом блоке выше.
-    // Пустой метод для обратной совместимости
+
     public static void setUp() {
-        // Настройки уже выполнены в статическом блоке
         System.out.println("setUp() called - configuration already initialized");
     }
 }

@@ -1,5 +1,7 @@
 package testingPractices.firstTestsWithSelenide;
 
+import com.codeborne.selenide.Configuration;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -8,6 +10,15 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 
 public class GithubTests {
+
+    @BeforeAll
+    static void setUp() {
+        Configuration.browserSize = "1920x1080";
+        Configuration.headless = true;
+        Configuration.timeout = 60000;
+        Configuration.pageLoadStrategy = "eager";
+        Configuration.browser = "chrome";
+    }
 
     @Test
     @Tag("SEARCH")

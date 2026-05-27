@@ -9,8 +9,8 @@ import pageObg.TextBoxPage;
 import static dataFaker.DataFakerRamdom.*;
 
 
-public class TextBoxTest  {//extends BaseConfigsDemoqa {
-    // ctrl+shift+L жмем после кажного готового теста, чтобы оптимизировать и удалить все лишнее
+public class TextBoxTest extends BaseConfigsDemoqa {
+    // ctrl+shift+L жмем после каждого готового теста, чтобы оптимизировать и удалить все лишнее
 
     // используем кастомные методы для генерации данных
     String fullName = getFullName();

@@ -20,10 +20,10 @@ public class WikipediaTest {
 
     private AndroidDriver driver;
 
-    // ЗАМЕНИТЕ НА ВАШИ ДАННЫЕ
-    private static final String USERNAME = "bsuser_n0F7wd";
-    private static final String ACCESS_KEY = "r1HMtt1PpRwTRx7b2mnk";
-    private static final String APP_URL = "bs://8aaf4eaf3a28246552065105dcf6a2d74367d524";
+    // Берём из переменных окружения или JVM properties
+    private static final String USERNAME = System.getProperty("browserstack.user", System.getenv("BROWSERSTACK_USERNAME"));
+    private static final String ACCESS_KEY = System.getProperty("browserstack.key", System.getenv("BROWSERSTACK_ACCESS_KEY"));
+    private static final String APP_URL = System.getProperty("browserstack.app", System.getenv("BROWSERSTACK_APP"));
 
     @BeforeEach
     public void setUp() throws Exception {
