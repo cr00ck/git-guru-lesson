@@ -1,13 +1,11 @@
 services:
-  # ─── Standalone Chrome (тесты) ───────────────────── ./gradlew allure_test --no-daemon -Dselenide.headless=false
+  # ─── Standalone Chrome (тесты) ─────────────────────
   selenium-chromium:
     image: selenium/standalone-chromium:latest
     container_name: selenium-chromium
     ports:
       - "4444:4444"
       - "7900:7900"
- # ─── ./gradlew allure_test --no-daemon -Dselenide.headless=false - в режиме когда видно выполнение
-
     environment:
       - SE_VNC_PASSWORD=secret
     restart: unless-stopped
@@ -32,14 +30,13 @@ services:
   selenoid:
     image: aerokube/selenoid:latest
     container_name: selenoid
-    # Порт 4444 не выставляем на хост — он занят selenium-chromium.
-    # Внутри Docker-сети контейнеры обращаются к selenoid:4444 по имени сервиса.
+    environment:
+      - DOCKER_API_VERSION=1.40                    # ← ДОБАВИТЬ ЭТУ СТРОКУ
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./selenoid/config:/etc/selenoid:ro
       - ./selenoid/video:/opt/selenoid/video
       - ./selenoid/logs:/opt/selenoid/logs
-    # Переменная DOCKER_API_VERSION удалена для совместимости с новой версией Docker
     command:
       [
         "-conf", "/etc/selenoid/browsers.json",
@@ -83,4 +80,4 @@ volumes:
 
 networks:
   selenoid_net:
-    # Сеть создаётся автоматически при запуске
+    driver: bridge
