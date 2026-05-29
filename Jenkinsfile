@@ -23,7 +23,7 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                sh 'gradle test --no-daemon -Dselenide.remote=http://selenium-chromium:4444/wd/hub'
+                sh './gradlew test --no-daemon -Dselenide.remote=http://selenium-chromium:4444/wd/hub'
             }
         }
 
