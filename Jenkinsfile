@@ -54,3 +54,4 @@ pipeline {
         }
     }
 }
+// чтобы скопировать код проекта в дженкинс в ручную docker cp ~/IdeaProjects/git-guru-lesson/. jenkins-git-guru:/var/jenkins_home/workspace/api-tests/

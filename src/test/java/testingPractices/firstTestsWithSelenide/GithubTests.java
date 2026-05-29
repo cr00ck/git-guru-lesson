@@ -4,24 +4,26 @@ import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import pageObg.BaseConfigs;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 
-public class GithubTests {
+public class GithubTests extends BaseConfigs {
 
-    @BeforeAll
-    static void setUp() {
-        Configuration.browserSize = "1920x1080";
-        Configuration.headless = true;
-        Configuration.timeout = 60000;
-        Configuration.pageLoadStrategy = "eager";
-        Configuration.browser = "chrome";
-    }
+//    @BeforeAll
+//    static void setUp() {
+//        Configuration.browserSize = "1920x1080";
+//        Configuration.headless = false;
+//        Configuration.timeout = 60000;
+//        Configuration.pageLoadStrategy = "eager";
+//        Configuration.browser = "chrome";
+//        Configuration.remote = null;
+//
+//    }
 
     @Test
-    @Tag("SEARCH")
     void HomeworkFindJUnit5 (){
 
         //- Откройте страницу Selenide в Github

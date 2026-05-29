@@ -20,6 +20,8 @@ public class SearchTests {
         //Configuration.pageLoadTimeout = 30000; // Увеличиваем таймаут загрузки
         Configuration.browserSize = "1920x1080";
         Configuration.headless = false;
+        Configuration.remote = null;
+
 
         // Настройки для стабильности
         Configuration.pageLoadStrategy = "normal";
@@ -52,6 +54,7 @@ public class SearchTests {
         $("a[href='https://selenide.org']")
                 .shouldBe(Condition.visible)
                 .shouldHave(Condition.text("https://selenide.org"));
+        sleep(4000);
 
         // Проверяем текст в блоке поиска
         $("#search").shouldHave(Condition.text("concise and powerful"));

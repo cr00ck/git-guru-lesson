@@ -2,7 +2,9 @@ package pageObg;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;
+import helpers.Attach;
 import io.qameta.allure.selenide.AllureSelenide;
+import org.junit.jupiter.api.AfterEach;
 
 public class BaseConfigs {
 
@@ -31,24 +33,34 @@ public class BaseConfigs {
 
         Configuration.timeout = 10000;
         Configuration.pageLoadStrategy = "eager";
-        Configuration.screenshots = false;
-        Configuration.savePageSource = false;
+        Configuration.screenshots = true;
+        Configuration.savePageSource = true;
 
-        // Allure listener
+        // ========== НАСТРОЙКА ALLURE LISTENER (ОДИН РАЗ) ==========
         SelenideLogger.addListener("AllureSelenide",
                 new AllureSelenide()
-                        .screenshots(true)
-                        .savePageSource(true)
+                        .screenshots(true)        // Скриншоты каждого шага
+                        .savePageSource(true)     // HTML каждого шага
                         .includeSelenideSteps(true)
         );
 
         System.out.println("=== Test Configuration ===");
-        System.out.println("Mode: " + (Configuration.remote != null ? "REMOTE" : "LOCAL"));
         System.out.println("Remote URL: " + Configuration.remote);
         System.out.println("Browser: " + Configuration.browser);
         System.out.println("Headless: " + Configuration.headless);
         System.out.println("=================================");
     }
+
+    // ========== ВЛОЖЕНИЯ ПОСЛЕ ТЕСТА ==========
+
+    @AfterEach
+    void addAttachments() {
+        Attach.screenshotAs("Last screenshot");
+        Attach.pageSource();
+        Attach.browserConsoleLogs();
+        Attach.addVideo();
+    }
+
 
     public static void setUp() {
         System.out.println("setUp() called - configuration already initialized");

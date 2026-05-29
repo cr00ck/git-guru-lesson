@@ -1,12 +1,13 @@
 package testingPractices.firstTestsWithSelenide;
 
 import org.junit.jupiter.api.Test;
+import pageObg.BaseConfigs;
 import pageObg.BaseConfigsDemoqa;
 import pageObg.RegistrationPage;
 
 import static dataFaker.DataFakerRamdom.*;
 
-public class DemoqaPracticeForm_PO extends BaseConfigsDemoqa {
+public class DemoqaPracticeForm_PO extends BaseConfigs {
     // ctrl+shift+L жмем после каждого готового теста, чтобы оптимизировать и удалить все лишнее
 
 
@@ -14,7 +15,6 @@ public class DemoqaPracticeForm_PO extends BaseConfigsDemoqa {
     void demoga_practice() {
 
         // Установки для теста
-        BaseConfigsDemoqa.setUp();
         RegistrationPage registrationPage = new RegistrationPage();
 
         registrationPage.openPage();

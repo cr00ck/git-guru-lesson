@@ -31,7 +31,7 @@ public class RegistrationPage {
     public String filePatH = "src/test/resources/img/Medal Star (1).png";
 
     public RegistrationPage openPage() {
-        open("/automation-practice-form");
+        open("https://demoqa.com/automation-practice-form");
         // Ждем, когда страница загрузится
         //$(".practice-form-wrapper").shouldBe(visible);
         return this;

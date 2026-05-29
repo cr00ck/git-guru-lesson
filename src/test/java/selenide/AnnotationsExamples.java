@@ -45,10 +45,6 @@ public class AnnotationsExamples  extends BaseConfigsDemoqa {
 //        }
         @MethodSource // позволяет написать любую аннотацию через него
         @ParameterizedTest(name = "Тест с введением ФИО {0} и мэйл {1} и других данных в карточке")     // нужна для использования @CsvSource и @ValueSource, в {0} вставляется из @ValueSource(strings значения или @CsvSource(value = где есть {0}{1}
-        @Tags({                 // будет запускать и с тем и с другим тэгом
-                @Tag("HTML"),
-                @Tag("PRACTICE")
-        })
        // @DisplayName("Тест с введением ФИО и других данных в карточке")
         @Disabled("тут надо писать тикет бага в ТМС, тест будет виден как неактивный")
         void textBoxForm(String nameSurname, String emailValue) { // входные данные strings из @ValueSource. В @ParameterizedTest будет {0} т.к один аргумент на вход, а так нужно использовать @CsvSource

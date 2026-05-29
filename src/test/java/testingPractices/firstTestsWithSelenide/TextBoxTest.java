@@ -20,7 +20,6 @@ public class TextBoxTest extends BaseConfigsDemoqa {
 
 
     @Test
-    @Tag("SEARCH")
     void textBoxForm() {
         SelenideLogger.addListener("allure", new AllureSelenide()); // чтобы видеть шаги и скрины в allure
         TextBoxPage textbopage = new TextBoxPage();

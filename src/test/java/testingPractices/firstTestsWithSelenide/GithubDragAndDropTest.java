@@ -32,7 +32,6 @@ public class GithubDragAndDropTest {
 
     @Disabled("the-internet.herokuapp.com нестабилен / медленно загружается")
     @Test
-    @Tag("SEARCH")
         //(опциональное) Запрограммируйте Drag&Drop с помощью Selenide.actions()
     void dragAndDropTest() {
         // ctrl+shift+L жмем после каждого готового теста, чтобы оптимизировать и удалить все лишнее
@@ -52,7 +51,6 @@ public class GithubDragAndDropTest {
     }
     @Disabled("the-internet.herokuapp.com нестабилен / медленно загружается")
     @Test
-    @Tag("SEARCH")
         void dragAndDropTestSecondMethod () {
         //- В Selenide есть команда $(element).dragAndDrop($(to-element)),
         // проверьте работает ли тест, если использовать её вместо actions()

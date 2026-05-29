@@ -1,6 +1,6 @@
- plugins {
-id 'java-library'
-id 'io.qameta.allure' version "2.11.2"
+plugins {
+    id 'java-library'
+    id 'io.qameta.allure' version "2.11.2"
 }
 
 group = 'org.example'
@@ -31,12 +31,12 @@ repositories {
     mavenCentral()
 }
 
-def aspectjWeaverVersion = "1.9.22",
-    selenideVersion = "6.13.0",
-    restAssuredVersion = "5.3.0",
-    allureVersion = "2.24.0",
-    junitVersion = "5.9.3",
-    slf4jVersion = "2.0.7"
+def aspectjWeaverVersion = "1.9.22"
+def selenideVersion = "6.13.0"
+def restAssuredVersion = "5.3.0"
+def allureVersion = "2.24.0"
+def junitVersion = "5.9.3"
+def slf4jVersion = "2.0.7"
 
 dependencies {
     testImplementation "io.qameta.allure:allure-junit5:${allureVersion}"
@@ -44,11 +44,9 @@ dependencies {
 
     testImplementation 'io.github.bonigarcia:webdrivermanager:5.6.3'
     testImplementation 'net.datafaker:datafaker:2.5.2'
-    // 6.x регистрирует SelenideNettyClientFactory (SPI) → ломается с Selenium 4.14+ без Netty; 7.x переключился на JdkHttpClient (см. META-INF в selenide-core).
     testImplementation 'com.codeborne:selenide:7.15.1'
     testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
     testImplementation "org.slf4j:slf4j-simple:${slf4jVersion}"
-    // Selenide pulls a compatible Selenium version; pinning selenium-java to 4.39 broke RemoteWebDriver (missing Netty HTTP client on classpath — see NettyClient$Factory).
     testImplementation 'commons-io:commons-io:2.16.1'
     testImplementation 'com.codeborne:pdf-test:1.8.1'
     testImplementation 'com.codeborne:xls-test:1.4.3'
@@ -60,43 +58,32 @@ dependencies {
     testImplementation 'io.appium:java-client:10.0.0'
     testImplementation 'org.aeonbits.owner:owner:1.0.12'
 
-
-    // Правильная конфигурация Lombok
     compileOnly 'org.projectlombok:lombok:1.18.34'
     annotationProcessor 'org.projectlombok:lombok:1.18.34'
     testCompileOnly 'org.projectlombok:lombok:1.18.34'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.34'
 
-
-    // Обновленная версия REST Assured (совместима с Java 17)
     testImplementation "io.rest-assured:rest-assured:${restAssuredVersion}"
     testImplementation "io.rest-assured:json-path:${restAssuredVersion}"
     testImplementation "io.rest-assured:xml-path:${restAssuredVersion}"
     testImplementation "io.rest-assured:json-schema-validator:${restAssuredVersion}"
     testImplementation "io.qameta.allure:allure-rest-assured:${allureVersion}"
 
-
-    // JAXB зависимости для Java 17
     testImplementation 'javax.xml.bind:jaxb-api:2.3.1'
     testImplementation 'com.sun.xml.bind:jaxb-impl:2.3.3'
     testImplementation 'com.sun.xml.bind:jaxb-core:2.3.0.1'
     testImplementation 'javax.activation:activation:1.1.1'
 }
-// создает уникальную папку для каждого запуска allure
-// В build.gradle оставьте фиксированный путь для Jenkins
-def allureResultsDir = "build/allure-results" // фиксированный путь для Jenkins
+
+def allureResultsDir = "build/allure-results"
 def archiveDir = "build/allure-results-archive/" + new Date().format('yyyy-MM-dd_HH-mm-ss')
 
-
-// ⚠️ ВАЖНО: Определяем задачу archiveAllureResults ДО ее использования
 task archiveAllureResults {
     doLast {
         def sourceDir = file("$buildDir/allure-results")
         if (sourceDir.exists()) {
             def targetDir = file(archiveDir)
-            // Создаем директорию назначения
             targetDir.mkdirs()
-            // Копируем файлы
             copy {
                 from sourceDir
                 into targetDir
@@ -108,19 +95,18 @@ task archiveAllureResults {
     }
 }
 
-tasks.withType(Test) { // чтобы запускался junit 5 , а так по дефолту 4
+tasks.withType(Test) {
     useJUnitPlatform()
 
-    // Настройки кодировки - добавьте их здесь
     systemProperty "file.encoding", "utf-8"
     systemProperty "console.encoding", "utf-8"
 
-    systemProperties.putAll(System.getProperties()) // дает нам менять значение переменных. В консоле: ./gradlew allure_test -Dbrowser=opera
+    systemProperties.putAll(System.getProperties())
 
     systemProperties.putAll([
             'selenide.browser': System.getProperty('browser', 'chrome'),
             'selenide.browserSize': System.getProperty('screen.size', '1920x1080'),
-            'selenide.headless': System.getProperty('selenide.headless', 'false'),  // ← ГИБКО
+            'selenide.headless': System.getProperty('selenide.headless', 'false'),
             'selenide.remote': System.getProperty('selenide.remote', 'http://localhost:4444/wd/hub'),
             'webdriver.http.factory': System.getProperty('webdriver.http.factory', 'jdk-http-client'),
             'allure.results.directory': allureResultsDir,
@@ -130,82 +116,64 @@ tasks.withType(Test) { // чтобы запускался junit 5 , а так п
     testLogging {
         lifecycle {
             events "passed", "skipped", "failed", "standard_error", "standard_out"
-            //exeptionFormat "short"
         }
     }
-    // ✅ После тестов архивируем результаты
+
     finalizedBy archiveAllureResults
 }
-// типы тасков по тэгам
+
 task simple_test(type: Test) {
     useJUnitPlatform {
         includeTags("SEARCH")
     }
 }
-    task allure_test(type: Test) { // TextBoxStepsAllureTest
-        useJUnitPlatform {
-            includeTags("ALLURE")
-        }
+
+task allure_test(type: Test) {
+    useJUnitPlatform {
+        includeTags("ALLURE")
     }
-    task ui_tests(type: Test) {
-        useJUnitPlatform {
-            includeTags("UI")
-        }
+}
+
+task ui_tests(type: Test) {
+    useJUnitPlatform {
+        includeTags("UI")
     }
+}
 
-    task api_tests(type: Test) {
-        useJUnitPlatform {
-            includeTags("API")
-        }
+task api_tests(type: Test) {
+    useJUnitPlatform {
+        includeTags("API")
     }
+}
 
-    task smoke_tests(type: Test) {
-        useJUnitPlatform {
-            includeTags("SMOKE", "REGRESSION")  // Два тега
-        }
+task smoke_tests(type: Test) {
+    useJUnitPlatform {
+        includeTags("SMOKE", "REGRESSION")
     }
-//task specific_package_tests(type: Test) {
-//    useJUnitPlatform {
-//        includePackages("com.example.ui")  // Фильтр по пакету
-//    }
-//}
+}
 
-//task specific_class_tests(type: Test) {
-//    useJUnitPlatform {
-//        includeClassNamePatterns(".*UITest")  // Фильтр по имени класса
-//    }
-//}
+// ========== Allure Report Tasks (исправлено для macOS) ==========
 
-
-// ✅ ИСПРАВЛЕННЫЕ ЗАДАЧИ:
-// Задачи для Allure отчета
 tasks.register('serveAllure', Exec) {
-    dependsOn test
-    description = 'Serve Allure report'
+    description = 'Serve Allure report (opens in browser)'
     group = 'Reporting'
 
     doFirst {
         println "Allure results directory: $buildDir/allure-results"
-        println "Note: Allure CLI must be installed on your system!"
-        println "Install with: scoop install allure"
+        println "Starting Allure server..."
     }
 
-    commandLine 'cmd', '/c', 'allure', 'serve', "$buildDir/allure-results"
+    commandLine 'sh', '-c', "allure serve $buildDir/allure-results"
 }
 
 tasks.register('allureGenerate', Exec) {
-    dependsOn test
     description = 'Generate Allure report'
     group = 'Reporting'
 
-    commandLine 'cmd', '/c', 'allure', 'generate',
-            "$buildDir/allure-results",
-            '-o', "$buildDir/reports/allure-report",
-            '--clean'
+    commandLine 'sh', '-c', "allure generate $buildDir/allure-results -o $buildDir/reports/allure-report --clean"
 }
 
 tasks.register('openReport') {
-    dependsOn allureGenerate
     description = 'Open Allure report in browser'
     group = 'Reporting'
 
@@ -216,7 +184,7 @@ tasks.register('openReport') {
             println "Report opened: $reportFile"
         } else {
             println "Report not found at: $reportFile"
-            println "Run './gradlew test allureGenerate' first"
+            println "Run './gradlew allureGenerate' first or run tests to generate results"
         }
     }
 }
@@ -227,11 +195,11 @@ tasks.register('testAndOpenReport') {
     group = 'Verification'
 }
 
-task cleanAllureResults(type: Delete) { // очистка папки с результатами ./gradlew cleanAllureResults
+task cleanAllureResults(type: Delete) {
     delete "$buildDir/allure-results"
     delete "$buildDir/reports/allure-report"
     delete "$buildDir/allure-results-archive"
-    description = "Очищает папки allure-results, allure-report и архивы"
+    description = "Cleans allure-results, allure-report and archives"
 }
 
 clean {
