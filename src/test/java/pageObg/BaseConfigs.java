@@ -58,7 +58,7 @@ public class BaseConfigs {
         Attach.screenshotAs("Last screenshot");
         Attach.pageSource();
         Attach.browserConsoleLogs();
-        Attach.addVideo();
+        Attach.addVideoToAllure();   // ← ВЫЗОВ НОВОГО МЕТОДА
     }
 
 

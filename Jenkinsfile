@@ -34,9 +34,15 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                sh "./gradlew ${TASK} --no-daemon -Dselenide.remote=http://selenium-chromium:4444/wd/hub -Dselenide.browser=${BROWSER} -Dselenide.browserSize=${SCREEN_SIZE} -Dselenide.headless=${HEADLESS} -Denv=${ENV}"
+                sh "./gradlew ${TASK} --no-daemon -Dselenide.remote=http://selenoid:4444/wd/hub -Dselenide.browser=${BROWSER} -Dselenide.browserSize=${SCREEN_SIZE} -Dselenide.headless=${HEADLESS} -Denv=${ENV}"
             }
         }
+
+//         stage('Run Tests') {
+//             steps {
+//                 sh "./gradlew ${TASK} --no-daemon -Dselenide.remote=http://selenium-chromium:4444/wd/hub -Dselenide.browser=${BROWSER} -Dselenide.browserSize=${SCREEN_SIZE} -Dselenide.headless=${HEADLESS} -Denv=${ENV}"
+//             }
+//         }
 
         stage('Archive Test Results') {
             steps {
