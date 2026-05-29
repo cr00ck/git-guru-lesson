@@ -129,7 +129,8 @@ task simple_test(type: Test) {
 }
 
 task allure_test(type: Test) {
-    useJUnitPlatform {
+    useJUnitPlatform()
+    filter {
         includeTags("ALLURE")
     }
 }
