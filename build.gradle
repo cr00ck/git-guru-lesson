@@ -124,32 +124,31 @@ tasks.withType(Test) {
 
 task simple_test(type: Test) {
     useJUnitPlatform {
-        includeTags("SEARCH")
+        includeTags 'SEARCH'
     }
 }
 
 task allure_test(type: Test) {
-    useJUnitPlatform()
-    filter {
-        includeTags("ALLURE")
+    useJUnitPlatform {
+        includeTags 'ALLURE'
     }
 }
 
 task ui_tests(type: Test) {
     useJUnitPlatform {
-        includeTags("UI")
+        includeTags 'UI'
     }
 }
 
 task api_tests(type: Test) {
     useJUnitPlatform {
-        includeTags("API")
+        includeTags 'API'
     }
 }
 
 task smoke_tests(type: Test) {
     useJUnitPlatform {
-        includeTags("SMOKE", "REGRESSION")
+        includeTags 'SMOKE', 'REGRESSION'
     }
 }
 
