@@ -4,34 +4,35 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
+import pageObg.BaseConfigs;
 
 import java.io.File;
 
 import static com.codeborne.selenide.Selenide.*;
 
 @DisplayName("Первые учебные тесты")
-public class SearchTests {
-    @BeforeAll
-    static void setup() {
-        // Автоматически скачает и настроит ChromeDriver
-        WebDriverManager.chromedriver().setup();
-        Configuration.browser = "chrome";
-        //Configuration.timeout = 10000;
-        //Configuration.pageLoadTimeout = 30000; // Увеличиваем таймаут загрузки
-        Configuration.browserSize = "1920x1080";
-        Configuration.headless = false;
-        Configuration.remote = null;
-
-
-        // Настройки для стабильности
-        Configuration.pageLoadStrategy = "normal";
-        Configuration.holdBrowserOpen = false;
+public class SearchTests extends BaseConfigs {
+//    @BeforeAll
+//    static void setup() {
+//        // Автоматически скачает и настроит ChromeDriver
+//        WebDriverManager.chromedriver().setup();
+//        Configuration.browser = "chrome";
+//        //Configuration.timeout = 10000;
+//        //Configuration.pageLoadTimeout = 30000; // Увеличиваем таймаут загрузки
+//        Configuration.browserSize = "1920x1080";
+//        Configuration.headless = false;
+//        Configuration.remote = null;
+//
+//
+//        // Настройки для стабильности
+//        Configuration.pageLoadStrategy = "normal";
+//        Configuration.holdBrowserOpen = false;
 
 //        Configuration.browserCapabilities.setCapability("goog:chromeOptions", java.util.Map.of(
 //                "excludeSwitches", java.util.List.of("enable-automation"),
 //                "useAutomationExtension", false
        // ));
-    }
+//    }
     //@Disabled("тут надо писать тикет бага в ТМС, тест будет виден как неактивный")
     @Test
 //    @Tags({

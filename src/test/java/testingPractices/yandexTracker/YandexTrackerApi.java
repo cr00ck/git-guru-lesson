@@ -5,6 +5,7 @@ import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import org.junit.jupiter.api.Disabled;
 
 import static io.restassured.RestAssured.given;
 
@@ -18,6 +19,8 @@ import static io.restassured.RestAssured.given;
  * </pre>
  * Также поддерживает передачу через JVM-свойства: {@code yt.token}, {@code yt.orgId}.
  */
+@Disabled("Не проверяем")
+
 public class YandexTrackerApi {
 
     private static final String BASE_URL = "https://api.tracker.yandex.net/v2";

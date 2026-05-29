@@ -4,11 +4,14 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.post;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.text.IsEmptyString.emptyOrNullString;
+
+@Disabled("Api не активно, тесты просто для учебы сделаны")
 
 public class BookingTesting {
 

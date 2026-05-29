@@ -4,27 +4,12 @@ import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.Test;
+import pageObg.BaseConfigs;
 
 import static com.codeborne.selenide.Selenide.*;
 
-public class QuickCheckTest {
+public class QuickCheckTest extends BaseConfigs {
 
-    static {
-        // Настройки для удалённого Selenium-сервера
-        Configuration.remote = "http://localhost:4444/wd/hub";
-        Configuration.browser = "chrome";
-        Configuration.headless = false;  // Временно выключите, чтобы увидеть браузер
-        Configuration.browserSize = "1920x1080";
-        Configuration.timeout = 10000;
-        
-        SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
-        
-        System.out.println("=== Selenide Configuration ===");
-        System.out.println("Remote: " + Configuration.remote);
-        System.out.println("Browser: " + Configuration.browser);
-        System.out.println("Headless: " + Configuration.headless);
-        System.out.println("==============================");
-    }
 
     @Test
     void quickCheck() {

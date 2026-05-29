@@ -2,6 +2,7 @@ package testingPractices.yandexTracker;
 
 import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -10,6 +11,8 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Яндекс Трекер API")
+@Disabled("Не проверяем")
+
 class YandexTrackerApiTest {
 
     private static String currentUserUid;

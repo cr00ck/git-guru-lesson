@@ -3,13 +3,14 @@ import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import pageObg.BaseConfigs;
 import pageObg.BaseConfigsDemoqa;
 import pageObg.TextBoxPage;
 
 import static dataFaker.DataFakerRamdom.*;
 
 
-public class TextBoxTest extends BaseConfigsDemoqa {
+public class TextBoxTest extends BaseConfigs {
     // ctrl+shift+L жмем после каждого готового теста, чтобы оптимизировать и удалить все лишнее
 
     // используем кастомные методы для генерации данных
