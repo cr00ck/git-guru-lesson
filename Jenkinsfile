@@ -5,39 +5,49 @@ pipeline {
         gradle 'Gradle-8.6'
     }
 
+    parameters {
+        choice(name: 'TASK', choices: ['allure_test', 'simple_test', 'api_tests', 'smoke_tests', 'ui_tests'], description: 'Выберите задачу для запуска')
+        choice(name: 'BROWSER', choices: ['chrome'], description: 'Браузер (только chrome)')
+        choice(name: 'SCREEN_SIZE', choices: ['375x667', '768x1024', '1920x1080', 'maximise'], description: 'Размер экрана')
+        booleanParam(name: 'HEADLESS', defaultValue: true, description: 'Режим headless (без GUI)')
+        choice(name: 'ENV', choices: ['PROD', 'PREPROD', 'STAGE'], description: 'Окружение')
+    }
+
     stages {
         stage('Setup') {
             steps {
-                sh 'echo "=== Проверка окружения ==="'
-                sh 'java -version'
-                sh 'gradle --version'
-                sh 'rm -rf .gradle build || true'
+                sh 'echo "=== Параметры сборки ==="'
+                sh 'echo "TASK: ${TASK}"'
+                sh 'echo "BROWSER: ${BROWSER}"'
+                sh 'echo "SCREEN_SIZE: ${SCREEN_SIZE}"'
+                sh 'echo "HEADLESS: ${HEADLESS}"'
+                sh 'echo "ENV: ${ENV}"'
+                sh 'chmod +x gradlew'
             }
         }
-        
+
         stage('Build') {
             steps {
-                sh 'gradle build -x test --no-daemon'
+                sh './gradlew build -x test --no-daemon'
             }
         }
 
         stage('Run Tests') {
             steps {
-                sh './gradlew test --no-daemon -Dselenide.remote=http://selenium-chromium:4444/wd/hub'
-            }
-        }
-
-        stage('Allure Report') {
-            steps {
-                sh 'gradle cleanAllureResults --no-daemon || true'
-                sh 'gradle allure_test --no-daemon || true'
-                sh 'gradle archiveAllureResults --no-daemon || true'
+                sh "./gradlew ${TASK} --no-daemon -Dselenide.remote=http://selenium-chromium:4444/wd/hub -Dselenide.browser=${BROWSER} -Dselenide.browserSize=${SCREEN_SIZE} -Dselenide.headless=${HEADLESS} -Denv=${ENV}"
             }
         }
 
         stage('Archive Test Results') {
             steps {
                 junit '**/build/test-results/test/*.xml'
+            }
+        }
+
+        stage('Allure Report') {
+            steps {
+                sh './gradlew cleanAllureResults --no-daemon || true'
+                sh './gradlew archiveAllureResults --no-daemon || true'
             }
         }
     }
@@ -54,4 +64,3 @@ pipeline {
         }
     }
 }
-// чтобы скопировать код проекта в дженкинс в ручную docker cp ~/IdeaProjects/git-guru-lesson/. jenkins-git-guru:/var/jenkins_home/workspace/api-tests/
