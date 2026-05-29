@@ -46,7 +46,6 @@ pipeline {
 
         stage('Allure Report') {
             steps {
-                // cleanAllureResults удалён, чтобы не стирать результаты перед архивацией
                 sh './gradlew archiveAllureResults --no-daemon || true'
             }
         }
@@ -56,7 +55,7 @@ pipeline {
         always {
             echo 'Pipeline completed!'
 
-            // Публикация Allure-отчёта (требуется Allure Jenkins Plugin)
+            // Публикация Allure-отчёта
             allure([
                 includeProperties: false,
                 jdk: '',
